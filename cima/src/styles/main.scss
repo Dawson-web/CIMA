@@ -1,0 +1,30 @@
+@import './variables.scss';
+
+body {
+  background-color: $page-bg-color-light;
+  @at-root html.dark & {
+    background-color: $page-bg-color-dark;
+  }
+}
+
+button:not([disabled]) {
+  cursor: pointer;
+}
+
+// 覆盖 NProgress 样式
+#nprogress {
+  .bar {
+    background: $element-plus-blue !important;
+  }
+
+  #peg {
+    box-shadow:
+      0 0 10px $element-plus-blue,
+      0 0 5px $element-plus-blue !important;
+  }
+
+  .spinner-icon {
+    border-top-color: $element-plus-blue !important;
+    border-left-color: $element-plus-blue !important;
+  }
+}
