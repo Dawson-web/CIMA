@@ -13,7 +13,7 @@ const onSubmit = async () => {
   const useAccount = useAccountStore();
   await useAccount.login(loginForm.value);
   if (useAccount._token.data != "密码错误" && useAccount._token.data != null) {
-    await useAccount.getAccountInfo(useAccount._token.data);
+    localStorage.setItem("token", useAccount._token.data);
     router.push("/dashboard");
   } else {
     alert("密码错误");

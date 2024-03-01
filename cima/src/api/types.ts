@@ -28,8 +28,8 @@ export const loginAPI = (form: loginForm) => {
   });
 };
 
-export const getAccountInfoAPI = (_token: string) => {
-  request({
+export const getAccountInfoAPI = (_token: any) => {
+  return request({
     method: "POST",
     url: "/user/user-info",
     headers: {

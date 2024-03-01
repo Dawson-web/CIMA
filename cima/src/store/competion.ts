@@ -10,7 +10,6 @@ export const useCompetitionStore = defineStore("competition", () => {
     } catch (e) {
       console.error("Failed to fetch competition data:", e);
     }
-    console.log(competitionData.value.data);
   }
 
   return { competitionData, getCompetitionData };

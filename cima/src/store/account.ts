@@ -9,10 +9,10 @@ export const useAccountStore = defineStore("account", () => {
   async function register(form: registerForm) {
     await registerAPI(form);
   }
-  async function getAccountInfo(__token: string) {
+  async function getAccountInfo() {
     try {
-      const res = await getAccountInfoAPI(__token);
-      // account.value = res.data;
+      const res = await getAccountInfoAPI(localStorage.getItem("token"));
+      account.value = res.data;
       console.log("account", res);
     } catch (e) {
       console.error("Failed to fetch account data:", e);
@@ -23,7 +23,6 @@ export const useAccountStore = defineStore("account", () => {
       const res = await loginAPI(form);
 
       _token.value = res.data;
-      console.log("as", _token.value);
     } catch (e) {
       console.error("Failed to fetch account data:", e);
     }

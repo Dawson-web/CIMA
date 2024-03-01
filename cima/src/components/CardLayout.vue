@@ -1,7 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useAccountStore } from "@/store/account";
+import { onMounted, ref } from "vue";
 const dialogFormVisible = ref(false);
+let accountInfo = ref({});
 const formLabelWidth = "140px";
+onMounted(async () => {
+  const useAccount = useAccountStore();
+  await useAccount.getAccountInfo();
+  accountInfo = useAccount.account.data;
+});
 </script>
 
 <template>
@@ -64,6 +71,7 @@ const formLabelWidth = "140px";
         <el-form> </el-form>
         <template #footer>
           <div class="dialog-footer">
+            <span>{{ accountInfo.username }}</span>
             <el-button @click="dialogFormVisible = false">Cancel</el-button>
             <el-button type="primary" @click="dialogFormVisible = false">
               Confirm
