@@ -1,10 +1,10 @@
 export interface registerForm {
-  hobbies?: null | string;
-  password?: null | string;
-  realName?: null | string;
-  username?: null | string;
-  age?: null | bigint;
-  grade?: null | string;
+  hobbies: string;
+  password: string;
+  realName: string;
+  username: string;
+  age: bigint;
+  grade: string;
 }
 export interface loginForm {
   password: string;

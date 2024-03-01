@@ -1,17 +1,17 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { getCompetionDataAPI } from "../api/types";
-export const useCompetionStore = defineStore("competion", () => {
-  const competionData = ref({ data: null });
-  async function getCompetionData() {
+import { getCompetitionDataAPI } from "../api/types";
+export const useCompetitionStore = defineStore("competition", () => {
+  const competitionData = ref({ data: null });
+  async function getCompetitionData() {
     try {
-      const res = await getCompetionDataAPI();
-      competionData.value = res.data;
+      const res = await getCompetitionDataAPI();
+      competitionData.value = res.data;
     } catch (e) {
       console.error("Failed to fetch competition data:", e);
     }
-    console.log(competionData.value.data);
+    console.log(competitionData.value.data);
   }
 
-  return { competionData, getCompetionData };
+  return { competitionData, getCompetitionData };
 });

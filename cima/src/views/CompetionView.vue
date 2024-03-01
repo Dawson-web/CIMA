@@ -11,7 +11,7 @@
       <el-row :gutter="12">
         <el-col
           :span="8"
-          v-for="item in competionDatas"
+          v-for="item in competitionDatas"
           :key="item.id"
           class="competion-card"
         >
@@ -32,17 +32,17 @@
 </template>
 
 <script setup lang="ts">
-import { useCompetionStore } from "@/store/competion";
+import { useCompetitionStore } from "@/store/competion";
 import { onMounted, ref } from "vue";
 
 onMounted(async () => {
-  const competionStore = useCompetionStore();
-  await competionStore.getCompetionData();
-  competionDatas.value = competionStore.competionData.data;
-  console.log(competionDatas.value);
+  const competitionStore = useCompetitionStore();
+  await competitionStore.getCompetitionData();
+  competitionDatas.value = competitionStore.competitionData.data;
+  console.log(competitionDatas.value);
 });
 
-const competionDatas = ref([]);
+const competitionDatas = ref([]);
 </script>
 
 <style scoped lang="scss">
@@ -53,6 +53,7 @@ const competionDatas = ref([]);
 
 .competion-card {
   height: 200px;
+  margin-top: 10px;
   .time {
     font-size: 12px;
     color: #999;

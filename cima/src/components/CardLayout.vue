@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+const dialogFormVisible = ref(false);
+const formLabelWidth = "140px";
+</script>
 
 <template>
   <div class="card-layout">
@@ -44,13 +48,29 @@
             <el-menu-item index="4" disabled>Info</el-menu-item>
             <el-menu-item index="5">Orders</el-menu-item>
           </el-menu>
-          <div>
+          <div @click="dialogFormVisible = true">
             <el-avatar
               src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
             />
           </div>
         </div>
       </div>
+
+      <el-dialog
+        v-model="dialogFormVisible"
+        title="Shipping address"
+        width="500"
+      >
+        <el-form> </el-form>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">
+              Confirm
+            </el-button>
+          </div>
+        </template>
+      </el-dialog>
     </section>
     <section class="main">
       <slot name="main"></slot>

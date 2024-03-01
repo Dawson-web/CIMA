@@ -6,7 +6,7 @@ export interface ApiResponse<Data> {
   msg?: null | string;
 }
 
-export const getCompetionDataAPI = () => {
+export const getCompetitionDataAPI = () => {
   return request({
     method: "GET",
     url: "/competition/infos",
@@ -25,5 +25,15 @@ export const loginAPI = (form: loginForm) => {
     method: "POST",
     url: "/user/login",
     data: form,
+  });
+};
+
+export const getAccountInfoAPI = (_token: string) => {
+  request({
+    method: "POST",
+    url: "/user/user-info",
+    headers: {
+      token: _token,
+    },
   });
 };
