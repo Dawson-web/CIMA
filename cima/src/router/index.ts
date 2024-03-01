@@ -1,3 +1,4 @@
+import CompetionViewVue from "@/views/CompetionView.vue";
 import HomeViewVue from "@/views/HomeView.vue";
 import LoginViewVue from "@/views/LoginView.vue";
 import NotFoundViewVue from "@/views/NotFoundView.vue";
@@ -24,6 +25,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     name: "dashboard",
     component: DashboardOverviewViewVue,
+    redirect: { name: "dashboard-competitions" },
+    children: [
+      {
+        path: "competitions",
+        name: "dashboard-competitions",
+        component: CompetionViewVue,
+      },
+    ],
   },
   {
     path: "/:noMatch",

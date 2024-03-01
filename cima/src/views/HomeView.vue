@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import DotBackground from "@/components/DotBackground.vue";
 import NavBar from "@/components/NavBar.vue";
-import { useCompetionStore } from "@/store/competion";
-const competionStore = useCompetionStore();
-const response = competionStore.getCompetionData();
-console.log(response);
 </script>
 <template>
   <div class="home">

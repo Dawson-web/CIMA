@@ -5,14 +5,18 @@ import router from "@/router";
 import { useAccountStore } from "@/store/account";
 import { ref } from "vue";
 const loginForm = ref({
-  usernmae: "",
+  username: "",
   password: "",
 });
 
-const onSubmit = () => {
+const onSubmit = async () => {
   const useAccount = useAccountStore();
-  useAccount.login(loginForm.value);
-  router.push("/dashboard");
+  await useAccount.login(loginForm.value);
+  if (useAccount._token.data != "密码错误" && useAccount._token.data != null) {
+    router.push("/dashboard");
+  } else {
+    alert("密码错误");
+  }
 };
 </script>
 
@@ -26,7 +30,7 @@ const onSubmit = () => {
       <div class="login-form-wrapper">
         <ElForm label-position="top">
           <ElFormItem label="用户名">
-            <ElInput type="usernmae" v-model="loginForm.usernmae" />
+            <ElInput type="usernmae" v-model="loginForm.username" />
           </ElFormItem>
           <ElFormItem label="密码" style="margin-bottom: calc(18px - 1.2rem)">
             <ElInput
