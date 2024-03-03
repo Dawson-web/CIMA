@@ -9,15 +9,15 @@ const registerForm = ref({
   password: "",
   realName: "",
   hobbies: "",
-  age: 10,
-  grade: "",
+  age: 1,
+  grade: 0,
 });
 // do not use same name with ref
 const onSubmit = async () => {
   const useAccount = useAccountStore();
   console.log(registerForm.value);
 
-  await useAccount.register(registerForm.value);
+  // await useAccount.register(registerForm.value);
   router.push("/login");
 };
 </script>
@@ -51,7 +51,7 @@ const onSubmit = async () => {
             <el-input-number
               type="age"
               v-model="registerForm.age"
-              :min="10"
+              :min="1"
               :max="100"
             />
           </ElFormItem>
@@ -61,8 +61,9 @@ const onSubmit = async () => {
               v-model="registerForm.grade"
               placeholder="选择"
             >
-              <ElOption label="大一" :value="1" />
-              <ElOption label="大二" :value="2" />
+              <ElOption label="小学" :value="0" />
+              <ElOption label="初中" :value="1" />
+              <ElOption label="小学" :value="2" />
             </ElSelect>
           </ElFormItem>
           <br />

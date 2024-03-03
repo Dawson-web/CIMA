@@ -1,22 +1,32 @@
 <script setup lang="ts">
-import { useCompetitionStore } from "@/store/competion";
+import { useAccountStore } from "@/store/account";
 import { defineProps, ref } from "vue";
 const props = defineProps({
   competitionDatas: Array,
 });
 
+const useAccount = useAccountStore();
 const competitionDialogVisible = ref(false);
-const competitionRegisterInfo = ref([]);
-const competitionName = ref("");
+const competitionRegisterForm = ref({
+  competitionName: "",
+  competitionType: "",
+  schoolName: "",
+  className: "",
+});
 
-const onGetCompetitionRegister = async (competition_name: string) => {
-  competitionName.value = competition_name;
-  competitionDialogVisible.value = true;
-  const competitionStore = useCompetitionStore();
-  competitionRegisterInfo.value = await competitionStore.getCompetitionRegister(
-    competition_name
-  );
-  console.log(competitionRegisterInfo.value);
+const refuseRegister = () => {
+  competitionDialogVisible.value = false;
+  competitionRegisterForm.value = {
+    competitionName: "",
+    competitionType: "",
+    schoolName: "",
+    className: "",
+  };
+};
+
+const onSubmitRegister = () => {
+  competitionDialogVisible.value = false;
+  useAccount.submitCompetitionRegister(competitionRegisterForm.value);
 };
 </script>
 <template>
@@ -33,7 +43,13 @@ const onGetCompetitionRegister = async (competition_name: string) => {
               key="primary"
               type="primary"
               text
-              @click="onGetCompetitionRegister(item.competitionName)"
+              @click="
+                (competitionRegisterForm.competitionName =
+                  item.competitionName),
+                  (competitionRegisterForm.competitionType =
+                    item.competitionType),
+                  (competitionDialogVisible = true)
+              "
             >
               {{ item.competitionName }}</el-button
             >
@@ -62,22 +78,39 @@ const onGetCompetitionRegister = async (competition_name: string) => {
 
     <el-dialog
       v-model="competitionDialogVisible"
-      :title="competitionName"
+      title="比赛报名"
       width="800"
       center
     >
-      <span>
-        It should be noted that the content will not be aligned in center by
-        default
-      </span>
+      <el-form
+        label-position="top"
+        label-width="auto"
+        :model="competitionRegisterForm"
+        style="max-width: 40%; margin: 0 auto"
+      >
+        <el-form-item label="比赛:">
+          <el-input
+            disabled
+            v-model="competitionRegisterForm.competitionName"
+          />
+        </el-form-item>
+        <el-form-item label="类型:">
+          <el-input
+            disabled
+            v-model="competitionRegisterForm.competitionType"
+          />
+        </el-form-item>
+        <el-form-item label="学校:">
+          <el-input v-model="competitionRegisterForm.schoolName" />
+        </el-form-item>
+        <el-form-item label="班级:">
+          <el-input v-model="competitionRegisterForm.className" />
+        </el-form-item>
+      </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="competitionDialogVisible = false"
-            >Cancel</el-button
-          >
-          <el-button type="primary" @click="competitionDialogVisible = false">
-            Confirm
-          </el-button>
+          <el-button @click="refuseRegister">取消</el-button>
+          <el-button type="primary" @click="onSubmitRegister"> 报名 </el-button>
         </div>
       </template>
     </el-dialog>

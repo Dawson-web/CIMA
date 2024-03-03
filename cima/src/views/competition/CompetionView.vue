@@ -20,18 +20,6 @@ const groupOptions = [
     value: "初中",
     label: "初中",
   },
-  {
-    value: "高中",
-    label: "高中",
-  },
-  {
-    value: "中专",
-    label: "中专",
-  },
-  {
-    value: "职高",
-    label: "职高",
-  },
 ];
 
 onMounted(async () => {
