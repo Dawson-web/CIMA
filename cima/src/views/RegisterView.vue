@@ -28,7 +28,7 @@ const onSubmit = async () => {
       <NavBar compact />
     </header>
     <main>
-      <h1 class="title">注册 eFresh</h1>
+      <h1 class="title">注册 cIMA</h1>
       <div class="login-form-wrapper">
         <ElForm label-position="top">
           <ElFormItem label="用户名">

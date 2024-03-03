@@ -20,3 +20,19 @@ export interface Competition {
   competitionWeb?: null | string;
   id?: number | null;
 }
+export interface updateForm {
+  newHobbies: string;
+  newUsername: string;
+}
+
+export interface passwordForm {
+  confirm: string;
+  password: string;
+}
+
+export interface competitionRegisterForm {
+  className: string;
+  competitionName: string;
+  competitionType: string;
+  schoolName: string;
+}

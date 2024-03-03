@@ -2,7 +2,7 @@
   <div>
     <CardLayout>
       <template #main>
-        <RouterView></RouterView>
+        <RouterView :key="$route.fullPath"></RouterView>
       </template>
     </CardLayout>
   </div>
