@@ -20,6 +20,10 @@ const groupOptions = [
     value: "初中",
     label: "初中",
   },
+  {
+    value: "高中",
+    label: "高中",
+  },
 ];
 
 onMounted(async () => {

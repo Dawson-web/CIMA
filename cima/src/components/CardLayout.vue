@@ -3,6 +3,7 @@ import router from "@/router/index";
 import { useAccountStore } from "@/store/account";
 import { useCompetitionStore } from "@/store/competion";
 import { Search } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { onMounted, ref } from "vue";
 
 const dialogFormVisible = ref(false);
@@ -35,13 +36,20 @@ const onSubmitAccountInfo = async () => {
     newAccountInfo.value.newUsername == "" ||
     newAccountInfo.value.newHobbies == ""
   ) {
-    alert("请完整填写个人信息!");
+    ElMessage({
+      type: "info",
+      message: "请完整填写用户信息",
+    });
   } else {
     console.log("submit!", newAccountInfo.value);
     await useAccount.updateAccountInfo(newAccountInfo.value);
     FormVisible.value = true;
     updateFormVisible.value = false;
     document.location.reload();
+    ElMessage({
+      type: "success",
+      message: "用户信息更新成功",
+    });
   }
 };
 
@@ -50,13 +58,23 @@ const onSubmitPawwsord = async () => {
     newPasswordInfo.value.confirm == "" ||
     newPasswordInfo.value.password == ""
   ) {
-    alert("请输入密码");
+    ElMessage({
+      type: "info",
+      message: "请正确输入密码",
+    });
   } else if (newPasswordInfo.value.confirm !== newPasswordInfo.value.password) {
-    alert("两次输入的密码不一致");
+    ElMessage({
+      type: "info",
+      message: "两次输入的密码不一致",
+    });
   } else {
     await useAccount.updatePassword(newPasswordInfo.value);
     FormVisible.value = true;
     updatePasswordVisible.value = false;
+    ElMessage({
+      type: "success",
+      message: "密码更新成功",
+    });
   }
 };
 
@@ -68,6 +86,30 @@ const onSearch = async () => {
   competitionStore.serachKeyword = keyword.value;
   router.push(`/dashboard/competitions/detail/${keyword.value}`);
   keyword.value = "";
+};
+
+const open = () => {
+  dialogFormVisible.value = false;
+  ElMessageBox.confirm("是否确认注销此账户?", "警告", {
+    confirmButtonText: "确认",
+    cancelButtonText: "取消",
+    type: "warning",
+  })
+    .then(() => {
+      ElMessage({
+        type: "success",
+        message: "账号已注销",
+      });
+      localStorage.removeItem("token");
+      router.push("/login");
+    })
+    .catch(() => {
+      dialogFormVisible.value = true;
+      ElMessage({
+        type: "info",
+        message: "已取消此操作",
+      });
+    });
 };
 </script>
 
@@ -169,15 +211,19 @@ const onSearch = async () => {
           /></el-form-item>
           <el-form-item>
             <el-button
+              plain
               @click="(FormVisible = false), (updatePasswordVisible = true)"
               >更改密码</el-button
             >
             <el-button
+              plain
               type="primary"
               @click="(updateFormVisible = true), (FormVisible = false)"
             >
-              更改用户信息
+              更改信息
             </el-button>
+
+            <el-button plain type="danger" @click="open"> 注销 </el-button>
           </el-form-item>
         </el-form>
         <el-form v-if="updateFormVisible" class="dialog-content">
