@@ -5,7 +5,7 @@
     <nav class="compactt, expanded }">
       <div class="wrapper">
         <div class="title" @click="$router.push({ name: 'home' })">
-          e<span style="font-weight: bold">Fresh</span>
+          c<span style="font-weight: bold">IMA</span>
         </div>
         <div class="badge" v-if="$route.matched[0].name === 'dashboard'">
           仪表盘

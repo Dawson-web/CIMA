@@ -13,6 +13,7 @@ const onSubmit = async () => {
   const useAccount = useAccountStore();
   await useAccount.login(loginForm.value);
   if (useAccount._token.data != "密码错误" && useAccount._token.data != null) {
+    localStorage.setItem("token", useAccount._token.data);
     router.push("/dashboard");
   } else {
     alert("密码错误");
@@ -26,7 +27,7 @@ const onSubmit = async () => {
       <NavBar compact />
     </header>
     <main>
-      <h1 class="title">登录 eFresh</h1>
+      <h1 class="title">登录 cIMA</h1>
       <div class="login-form-wrapper">
         <ElForm label-position="top">
           <ElFormItem label="用户名">

@@ -5,15 +5,19 @@ import router from "@/router";
 import { useAccountStore } from "@/store/account";
 import { ref } from "vue";
 const registerForm = ref({
-  usernmae: "",
+  username: "",
   password: "",
   realName: "",
   hobbies: "",
+  age: 1,
+  grade: 0,
 });
 // do not use same name with ref
-const onSubmit = () => {
+const onSubmit = async () => {
   const useAccount = useAccountStore();
-  useAccount.register(registerForm.value);
+  console.log(registerForm.value);
+
+  // await useAccount.register(registerForm.value);
   router.push("/login");
 };
 </script>
@@ -24,24 +28,43 @@ const onSubmit = () => {
       <NavBar compact />
     </header>
     <main>
-      <h1 class="title">注册 eFresh</h1>
+      <h1 class="title">注册 cIMA</h1>
       <div class="login-form-wrapper">
         <ElForm label-position="top">
           <ElFormItem label="用户名">
-            <ElInput type="usernmae" v-model="registerForm.usernmae" />
+            <ElInput type="usernmae" v-model="registerForm.username" />
           </ElFormItem>
-          <ElFormItem label="密码" style="margin-bottom: calc(18px - 1.2rem)">
+          <ElFormItem label="密码">
             <ElInput
               type="password"
               show-password
               v-model="registerForm.password"
             />
-            <ElFormItem label="真实姓名">
-              <ElInput type="realName" v-model="registerForm.realName" />
-            </ElFormItem>
-            <ElFormItem label="爱好">
-              <ElInput type="hobbies" v-model="registerForm.hobbies" />
-            </ElFormItem>
+          </ElFormItem>
+          <ElFormItem label="真实姓名">
+            <ElInput type="realName" v-model="registerForm.realName" />
+          </ElFormItem>
+          <ElFormItem label="爱好">
+            <ElInput type="hobbies" v-model="registerForm.hobbies" />
+          </ElFormItem>
+          <ElFormItem label="年龄">
+            <el-input-number
+              type="age"
+              v-model="registerForm.age"
+              :min="1"
+              :max="100"
+            />
+          </ElFormItem>
+          <ElFormItem label="年级">
+            <ElSelect
+              type="grade"
+              v-model="registerForm.grade"
+              placeholder="选择"
+            >
+              <ElOption label="小学" :value="0" />
+              <ElOption label="初中" :value="1" />
+              <ElOption label="小学" :value="2" />
+            </ElSelect>
           </ElFormItem>
           <br />
           <ElButton style="width: 100%" type="primary" plain @click="onSubmit"

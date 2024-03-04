@@ -8,8 +8,8 @@ import NavBar from "@/components/NavBar.vue";
       <NavBar compact />
     </header>
     <main>
-      <h2 class="slogan">Epoch Lab.</h2>
-      <h1 class="title">林森课堂</h1>
+      <h2 class="slogan">全国中小学生</h2>
+      <h1 class="title">竞赛信息管理系统</h1>
       <h3 class="status">Get Start From Now ~</h3>
       <div class="register-btn-wrapper">
         <div class="shadow"></div>
