@@ -58,7 +58,7 @@ export const useAccountStore = defineStore("account", () => {
   async function submitCompetitionRegister(form: any) {
     try {
       await submitCompetitionRegisterAPI(localStorage.getItem("token"), {
-        className: form.className,
+        province: form.province,
         competitionName: form.competitionName,
         competitionType: form.competitionType,
         schoolName: form.schoolName,

@@ -31,8 +31,8 @@ export interface passwordForm {
 }
 
 export interface competitionRegisterForm {
-  className: string;
+  schoolName: string;
   competitionName: string;
   competitionType: string;
-  schoolName: string;
+  province: string;
 }

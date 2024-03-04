@@ -39,12 +39,18 @@ export const getCompetitionGroupAPI = (group: string) => {
   });
 };
 
-export const getCompetitionRegisterAPI = (competition_name: string) => {
+export const getCompetitionRegisterAPI = (
+  _token: any,
+  competition_name: string
+) => {
   return request({
     method: "GET",
     url: "/registration/get-competition",
     params: {
       competition_name: competition_name,
+    },
+    headers: {
+      token: _token,
     },
   });
 };
@@ -116,5 +122,18 @@ export const submitCompetitionRegisterAPI = (
       token: _token,
     },
     data: form,
+  });
+};
+
+export const categoryShowcaseContestAPI = (_token: any, search: number) => {
+  return request({
+    method: "GET",
+    url: "/registration/search",
+    headers: {
+      token: _token,
+    },
+    params: {
+      search: search,
+    },
   });
 };

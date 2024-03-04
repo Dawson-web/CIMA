@@ -7,6 +7,7 @@ const selfregisterinfo = ref([]);
 onMounted(async () => {
   const useAccount = useAccountStore();
   selfregisterinfo.value = await useAccount.getCompetitionSelfRegister();
+  console.log(selfregisterinfo.value);
 });
 </script>
 
@@ -14,8 +15,20 @@ onMounted(async () => {
   <div>
     <h1>个人报名情况</h1>
     <div class="card-box">
-      <el-card style="width: 30%" v-for="o in 4" :key="o">
-        <p class="text item">{{ "List item " + o }}</p>
+      <el-card
+        style="width: 30%; padding: 20px"
+        v-for="item in selfregisterinfo.data"
+        :key="item.competitionName"
+      >
+        <p class="text">{{ item.competitionName }}</p>
+        <div>
+          <span class="type" style="float: left"
+            >类别：{{ item.competitionType }}</span
+          >
+          <span style="font-size: 12px; float: right; color: #409eff"
+            >状态：已报名</span
+          >
+        </div>
       </el-card>
     </div>
   </div>
@@ -30,5 +43,9 @@ onMounted(async () => {
   gap: 3%;
   row-gap: 20px;
   flex-wrap: wrap;
+  .type {
+    font-size: 12px;
+    color: #999;
+  }
 }
 </style>

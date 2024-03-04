@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import {
+  categoryShowcaseContestAPI,
   getCompetitionDataAPI,
   getCompetitionDetailAPI,
   getCompetitionGroupAPI,
@@ -39,10 +40,28 @@ export const useCompetitionStore = defineStore("competition", () => {
 
   async function getCompetitionRegister(competition_name: string) {
     try {
-      const res = await getCompetitionRegisterAPI(competition_name);
+      const res = await getCompetitionRegisterAPI(
+        localStorage.getItem("token"),
+        competition_name
+      );
       return res.data;
     } catch (e) {
       console.error("Failed to fetch competition data register info:", e);
+    }
+  }
+
+  async function categoryShowcaseContest(search: number) {
+    try {
+      const res = await categoryShowcaseContestAPI(
+        localStorage.getItem("token"),
+        search
+      );
+      return res.data;
+    } catch (e) {
+      console.error(
+        "Failed to fetch competition data by category showcase contest:",
+        e
+      );
     }
   }
 
@@ -54,5 +73,6 @@ export const useCompetitionStore = defineStore("competition", () => {
     getCompetitionGroup,
     competitionGroupData,
     getCompetitionRegister,
+    categoryShowcaseContest,
   };
 });

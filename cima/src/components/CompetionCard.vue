@@ -11,7 +11,7 @@ const competitionRegisterForm = ref({
   competitionName: "",
   competitionType: "",
   schoolName: "",
-  className: "",
+  province: "",
 });
 
 const refuseRegister = () => {
@@ -20,7 +20,7 @@ const refuseRegister = () => {
     competitionName: "",
     competitionType: "",
     schoolName: "",
-    className: "",
+    province: "",
   };
 };
 
@@ -103,8 +103,8 @@ const onSubmitRegister = () => {
         <el-form-item label="学校:">
           <el-input v-model="competitionRegisterForm.schoolName" />
         </el-form-item>
-        <el-form-item label="班级:">
-          <el-input v-model="competitionRegisterForm.className" />
+        <el-form-item label="省份:">
+          <el-input v-model="competitionRegisterForm.province" />
         </el-form-item>
       </el-form>
       <template #footer>
