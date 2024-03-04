@@ -3,6 +3,7 @@ import DotBackground from "@/components/DotBackground.vue";
 import NavBar from "@/components/NavBar.vue";
 import router from "@/router";
 import { useAccountStore } from "@/store/account";
+import { ElMessage } from "element-plus";
 import { ref } from "vue";
 const loginForm = ref({
   username: "",
@@ -12,11 +13,22 @@ const loginForm = ref({
 const onSubmit = async () => {
   const useAccount = useAccountStore();
   await useAccount.login(loginForm.value);
-  if (useAccount._token.data != "密码错误" && useAccount._token.data != null) {
+  if (loginForm.value.username == "" || loginForm.value.password == "") {
+    ElMessage({
+      type: "info",
+      message: "请正确输入账号和密码",
+    });
+  } else if (
+    useAccount._token.data != "密码错误" &&
+    useAccount._token.data != null
+  ) {
     localStorage.setItem("token", useAccount._token.data);
     router.push("/dashboard");
   } else {
-    alert("密码错误");
+    ElMessage({
+      type: "info",
+      message: "密码错误",
+    });
   }
 };
 </script>
