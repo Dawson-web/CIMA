@@ -5,6 +5,8 @@ export interface registerForm {
   username: string;
   age: bigint;
   grade: string;
+  school: string;
+  province: string;
 }
 export interface loginForm {
   password: string;

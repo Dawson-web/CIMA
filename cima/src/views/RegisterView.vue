@@ -11,13 +11,45 @@ const registerForm = ref({
   hobbies: "",
   age: 1,
   grade: 0,
+  school: "",
+  province: "",
 });
-// do not use same name with ref
+const province = [
+  "四川省",
+  "贵州省",
+  "云南省",
+  "西藏自治区",
+  "陕西省",
+  "甘肃省",
+  "青海省",
+  "宁夏回族自治区",
+  "新疆维吾尔自治区",
+  "河北省",
+  "山西省",
+  "内蒙古自治区",
+  "辽宁省",
+  "吉林省",
+  "黑龙江省",
+  "江苏省",
+  "浙江省",
+  "安徽省",
+  "福建省",
+  "江西省",
+  "山东省",
+  "河南省",
+  "湖北省",
+  "湖南省",
+  "广东省",
+  "广西壮族自治区",
+  "海南省",
+  "北京市",
+  "天津市",
+  "上海市",
+  "重庆市",
+];
 const onSubmit = async () => {
   const useAccount = useAccountStore();
-  console.log(registerForm.value);
-
-  // await useAccount.register(registerForm.value);
+  await useAccount.register(registerForm.value);
   router.push("/login");
 };
 </script>
@@ -47,12 +79,15 @@ const onSubmit = async () => {
           <ElFormItem label="爱好">
             <ElInput type="hobbies" v-model="registerForm.hobbies" />
           </ElFormItem>
+          <ElFormItem label="学校">
+            <ElInput type="school" v-model="registerForm.school" />
+          </ElFormItem>
           <ElFormItem label="年龄">
             <el-input-number
               type="age"
               v-model="registerForm.age"
               :min="1"
-              :max="100"
+              :max="20"
             />
           </ElFormItem>
           <ElFormItem label="年级">
@@ -63,7 +98,21 @@ const onSubmit = async () => {
             >
               <ElOption label="小学" :value="0" />
               <ElOption label="初中" :value="1" />
-              <ElOption label="小学" :value="2" />
+              <ElOption label="高中" :value="2" />
+            </ElSelect>
+          </ElFormItem>
+          <ElFormItem label="省份">
+            <ElSelect
+              type="province"
+              v-model="registerForm.province"
+              placeholder="选择"
+            >
+              <ElOption
+                v-for="item in province"
+                :key="item"
+                :label="item"
+                :value="item"
+              />
             </ElSelect>
           </ElFormItem>
           <br />
