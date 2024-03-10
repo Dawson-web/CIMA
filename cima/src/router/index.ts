@@ -7,7 +7,7 @@ import CompetitionDetailViewVue from "@/views/competition/CompetitionDetailView.
 import CompetitionRegisterViewVue from "@/views/competition/CompetitionRegisterView.vue";
 import CompetitionSelfRegisterViewVue from "@/views/competition/CompetitionSelfRegisterView.vue";
 import DashboardOverviewViewVue from "@/views/dashboard/DashboardOverviewView.vue";
-import { RouteRecordRaw, createRouter, createWebHistory } from "vue-router";
+import { RouteRecordRaw, createRouter, createWebHashHistory } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -59,7 +59,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes,
 });
 

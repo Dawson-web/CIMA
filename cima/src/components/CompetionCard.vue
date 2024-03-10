@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import { useAccountStore } from "@/store/account";
-import { defineProps, ref } from "vue";
+import { defineProps, onMounted, ref } from "vue";
 const props = defineProps({
   competitionDatas: Array,
 });
 
 const useAccount = useAccountStore();
+
+const accountInfo = ref({});
 const competitionDialogVisible = ref(false);
 const competitionRegisterForm = ref({
   competitionName: "",
   competitionType: "",
   schoolName: "",
   province: "",
+});
+
+onMounted(async () => {
+  accountInfo.value = await useAccount.getAccountInfo();
 });
 
 const refuseRegister = () => {
@@ -26,6 +32,8 @@ const refuseRegister = () => {
 
 const onSubmitRegister = () => {
   competitionDialogVisible.value = false;
+  competitionRegisterForm.value.schoolName = accountInfo.value.data.school;
+  competitionRegisterForm.value.province = accountInfo.value.data.province;
   useAccount.submitCompetitionRegister(competitionRegisterForm.value);
 };
 </script>
@@ -101,10 +109,10 @@ const onSubmitRegister = () => {
           />
         </el-form-item>
         <el-form-item label="学校:">
-          <el-input v-model="competitionRegisterForm.schoolName" />
+          <el-input v-model="accountInfo.data.school" />
         </el-form-item>
         <el-form-item label="省份:">
-          <el-input v-model="competitionRegisterForm.province" />
+          <el-input v-model="accountInfo.data.province" />
         </el-form-item>
       </el-form>
       <template #footer>

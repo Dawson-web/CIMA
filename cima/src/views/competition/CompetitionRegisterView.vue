@@ -91,7 +91,7 @@ const getChart = (competitionByCategory: any) => {
     },
     series: [
       {
-        name: "Access From",
+        name: "参数详情",
         type: "pie",
         radius: ["40%", "70%"],
         avoidLabelOverlap: false,
@@ -107,7 +107,7 @@ const getChart = (competitionByCategory: any) => {
         emphasis: {
           label: {
             show: true,
-            fontSize: 40,
+            fontSize: 15,
             fontWeight: "bold",
           },
         },
@@ -181,7 +181,7 @@ const _onSelectChange = async () => {
       <el-select
         @change="_onSelectChange"
         v-model="competitionName"
-        placeholder=""
+        placeholder="Select"
         size="small"
         style="width: 120px"
       >

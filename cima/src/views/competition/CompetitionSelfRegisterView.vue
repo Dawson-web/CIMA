@@ -16,7 +16,7 @@ onMounted(async () => {
     <h1>个人报名情况</h1>
     <div class="card-box">
       <el-card
-        style="width: 30%; padding: 20px"
+        style="padding: 20px"
         v-for="item in selfregisterinfo.data"
         :key="item.competitionName"
       >
@@ -38,8 +38,8 @@ onMounted(async () => {
 .card-box {
   margin: 0 auto;
   width: 90%;
-  justify-content: flex-start;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 3%;
   row-gap: 20px;
   flex-wrap: wrap;

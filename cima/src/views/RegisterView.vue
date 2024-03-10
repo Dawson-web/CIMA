@@ -61,28 +61,28 @@ const onSubmit = async () => {
     </header>
     <main>
       <h1 class="title">注册 cIMA</h1>
-      <div class="login-form-wrapper">
-        <ElForm label-position="top">
-          <ElFormItem label="用户名">
+      <div class="register-form-wrapper">
+        <ElForm label-position="left" class="register-form">
+          <ElFormItem label="用户:">
             <ElInput type="usernmae" v-model="registerForm.username" />
           </ElFormItem>
-          <ElFormItem label="密码">
+          <ElFormItem label="密码:">
             <ElInput
               type="password"
               show-password
               v-model="registerForm.password"
             />
           </ElFormItem>
-          <ElFormItem label="真实姓名">
+          <ElFormItem label="姓名:">
             <ElInput type="realName" v-model="registerForm.realName" />
           </ElFormItem>
-          <ElFormItem label="爱好">
+          <ElFormItem label="爱好:">
             <ElInput type="hobbies" v-model="registerForm.hobbies" />
           </ElFormItem>
-          <ElFormItem label="学校">
+          <ElFormItem label="学校:">
             <ElInput type="school" v-model="registerForm.school" />
           </ElFormItem>
-          <ElFormItem label="年龄">
+          <ElFormItem label="年龄:">
             <el-input-number
               type="age"
               v-model="registerForm.age"
@@ -90,22 +90,24 @@ const onSubmit = async () => {
               :max="20"
             />
           </ElFormItem>
-          <ElFormItem label="年级">
+          <ElFormItem label="年级:">
             <ElSelect
               type="grade"
               v-model="registerForm.grade"
               placeholder="选择"
+              style="min-width: 100px"
             >
               <ElOption label="小学" :value="0" />
               <ElOption label="初中" :value="1" />
               <ElOption label="高中" :value="2" />
             </ElSelect>
           </ElFormItem>
-          <ElFormItem label="省份">
+          <ElFormItem label="省份:">
             <ElSelect
               type="province"
               v-model="registerForm.province"
               placeholder="选择"
+              style="min-width: 100px"
             >
               <ElOption
                 v-for="item in province"
@@ -115,11 +117,11 @@ const onSubmit = async () => {
               />
             </ElSelect>
           </ElFormItem>
-          <br />
-          <ElButton style="width: 100%" type="primary" plain @click="onSubmit"
-            >注册</ElButton
-          >
         </ElForm>
+
+        <ElButton style="width: 100%" type="primary" plain @click="onSubmit"
+          >注册</ElButton
+        >
         <div style="display: flex; align-items: center; margin-top: 1rem">
           <ElText>已有账户？</ElText>
           <ElLink type="primary" @click="$router.push({ name: 'login' })"
@@ -159,11 +161,16 @@ main {
   font-weight: 200;
 }
 
-.login-form-wrapper {
+.register-form-wrapper {
   width: 280px;
   padding: 3rem 2rem;
   background-color: #fff;
   border-radius: $border-radius-lg;
+  .register-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 }
 
 .captcha-wrapper {

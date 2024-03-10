@@ -11,7 +11,17 @@ const FormVisible = ref(true);
 const updateFormVisible = ref(false);
 const updatePasswordVisible = ref(false);
 
-let accountInfo = ref({});
+let accountInfo = ref({
+  username: "",
+  realName: "",
+  hobbies: "",
+  createTime: 0,
+  updateTime: 0,
+  age: 0,
+  grade: 0,
+  school: "",
+  province: "",
+});
 let newAccountInfo = ref({
   newUsername: "",
   newHobbies: "",
@@ -143,19 +153,6 @@ const open = () => {
                 >竞赛报名情况</el-menu-item
               >
             </el-sub-menu>
-            <el-sub-menu index="3" :popper-offset="8">
-              <template #title>Override Popper Offset</template>
-              <el-menu-item index="3-1">item one</el-menu-item>
-              <el-menu-item index="3-2">item two</el-menu-item>
-              <el-menu-item index="3-3">item three</el-menu-item>
-              <el-sub-menu index="3-4" :popper-offset="20">
-                <template #title>override child</template>
-                <el-menu-item index="3-4-1">item one</el-menu-item>
-                <el-menu-item index="3-4-2">item two</el-menu-item>
-                <el-menu-item index="3-4-3">item three</el-menu-item>
-              </el-sub-menu>
-            </el-sub-menu>
-
             <el-menu-item
               class="flex gap-4 mb-4 items-center"
               style="margin-left: 5%"
@@ -203,6 +200,45 @@ const open = () => {
           <el-form-item label="爱好:">
             <el-input
               v-model="accountInfo.hobbies"
+              style="width: 240px"
+              disabled
+              placeholder="
+              accountInfo.hobbies
+              "
+          /></el-form-item>
+          <el-form-item label="年龄:">
+            <el-input
+              v-model="accountInfo.age"
+              style="width: 240px"
+              disabled
+              placeholder="
+              accountInfo.age
+              "
+          /></el-form-item>
+          <el-form-item label="年级:">
+            <ElSelect
+              type="grade"
+              v-model="accountInfo.grade"
+              style="width: 240px"
+              disabled
+            >
+              <ElOption disabled label="小学" :value="0" />
+              <ElOption disabled label="初中" :value="1" />
+              <ElOption disabled label="高中" :value="2" />
+            </ElSelect>
+          </el-form-item>
+          <el-form-item label="学校:">
+            <el-input
+              v-model="accountInfo.school"
+              style="width: 240px"
+              disabled
+              placeholder="
+              accountInfo.hobbies
+              "
+          /></el-form-item>
+          <el-form-item label="省份:">
+            <el-input
+              v-model="accountInfo.province"
               style="width: 240px"
               disabled
               placeholder="

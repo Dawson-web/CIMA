@@ -88,7 +88,7 @@ main {
   gap: 20px;
 
   @media (max-height: $mobile-height-breakpoint) {
-    margin-top: 2svh;
+    margin-top: 10svh;
   }
 }
 

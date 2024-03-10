@@ -20,6 +20,7 @@ export const useAccountStore = defineStore("account", () => {
     try {
       const res = await getAccountInfoAPI(localStorage.getItem("token"));
       account.value = res.data;
+      return res.data;
     } catch (e) {
       console.error("Failed to fetch account data:", e);
     }
