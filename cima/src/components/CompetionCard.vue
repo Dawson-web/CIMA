@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAccountStore } from "@/store/account";
+import { ElMessage } from "element-plus";
 import { defineProps, onMounted, ref } from "vue";
 const props = defineProps({
   competitionDatas: Array,
@@ -15,11 +16,11 @@ const competitionRegisterForm = ref({
   schoolName: "",
   province: "",
 });
-
+// 预载
 onMounted(async () => {
   accountInfo.value = await useAccount.getAccountInfo();
 });
-
+// 取消报名操作
 const refuseRegister = () => {
   competitionDialogVisible.value = false;
   competitionRegisterForm.value = {
@@ -29,12 +30,13 @@ const refuseRegister = () => {
     province: "",
   };
 };
-
+// 比赛报名
 const onSubmitRegister = () => {
   competitionDialogVisible.value = false;
   competitionRegisterForm.value.schoolName = accountInfo.value.data.school;
   competitionRegisterForm.value.province = accountInfo.value.data.province;
   useAccount.submitCompetitionRegister(competitionRegisterForm.value);
+  ElMessage.success("报名成功");
 };
 </script>
 <template>

@@ -4,10 +4,10 @@ import { onMounted, ref } from "vue";
 
 const selfregisterinfo = ref([]);
 
+// 获取个人报名情况
 onMounted(async () => {
   const useAccount = useAccountStore();
   selfregisterinfo.value = await useAccount.getCompetitionSelfRegister();
-  console.log(selfregisterinfo.value);
 });
 </script>
 

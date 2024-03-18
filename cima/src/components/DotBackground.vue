@@ -9,12 +9,12 @@
   z-index: -100;
   position: fixed;
   inset: 0;
-
+  background-color: #fafafa;
   --bg-color: #{$page-bg-color-light};
   --dot-color: rgba(0, 0, 0, 0.2);
   @at-root html.dark & {
     --bg-color: #{$page-bg-color-dark};
-    --dot-color: rgba(255, 255, 255, 0.2);
+    --dot-color: #333333;
   }
 
   background-image: linear-gradient(

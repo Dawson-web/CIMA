@@ -34,13 +34,13 @@ let keyword = ref("");
 
 const useAccount = useAccountStore();
 const competitionStore = useCompetitionStore();
-
+// 预载
 onMounted(async () => {
   const useAccount = useAccountStore();
   await useAccount.getAccountInfo();
   accountInfo = useAccount.account.data;
 });
-
+// 更改用户信息
 const onSubmitAccountInfo = async () => {
   if (
     newAccountInfo.value.newUsername == "" ||
@@ -62,7 +62,7 @@ const onSubmitAccountInfo = async () => {
     });
   }
 };
-
+// 更改密码
 const onSubmitPawwsord = async () => {
   if (
     newPasswordInfo.value.confirm == "" ||
@@ -87,7 +87,7 @@ const onSubmitPawwsord = async () => {
     });
   }
 };
-
+// 竞赛信息关键字查询
 const onSearch = async () => {
   if (keyword.value == "") {
     alert("请输入关键字");
@@ -97,10 +97,10 @@ const onSearch = async () => {
   router.push(`/dashboard/competitions/detail/${keyword.value}`);
   keyword.value = "";
 };
-
-const open = () => {
+// 退出登录
+const loginOut = () => {
   dialogFormVisible.value = false;
-  ElMessageBox.confirm("是否确认注销此账户?", "警告", {
+  ElMessageBox.confirm("是否确认退出此账户?", "警告", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     type: "warning",
@@ -108,7 +108,7 @@ const open = () => {
     .then(() => {
       ElMessage({
         type: "success",
-        message: "账号已注销",
+        message: "账号已退出",
       });
       localStorage.removeItem("token");
       router.push("/login");
@@ -259,7 +259,9 @@ const open = () => {
               更改信息
             </el-button>
 
-            <el-button plain type="danger" @click="open"> 注销 </el-button>
+            <el-button plain type="danger" @click="loginOut">
+              退出登录
+            </el-button>
           </el-form-item>
         </el-form>
         <el-form v-if="updateFormVisible" class="dialog-content">

@@ -25,12 +25,12 @@ const groupOptions = [
     label: "高中",
   },
 ];
-
+// 预载
 onMounted(async () => {
   const competitionStore = useCompetitionStore();
   competitionDatas.value = await competitionStore.getCompetitionData();
 });
-
+// 切换年级分组
 const onGroupChange = async () => {
   if (group.value === "全部") {
     competitionDatas.value = await competitionStore.getCompetitionData();

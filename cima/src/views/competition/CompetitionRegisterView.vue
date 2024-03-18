@@ -23,6 +23,7 @@ const typeOptions = [
 ];
 
 const competitionName = ref("");
+
 const competitionNameOptions = ref([
   "全国青少年人工智能创新挑战赛",
   "全国中小学信息技术创新与实践大赛",
@@ -70,10 +71,10 @@ const competitionNameOptions = ref([
   "全国青少年音乐素养大赛",
 ]);
 const competitionRegisterInfo = ref([]);
-
+// 获取图表
 const getChart = (competitionByCategory: any) => {
   let Data = [];
-
+  // 数据格式化处理
   competitionByCategory.forEach((item) => {
     Data.push({ name: item.searchName, value: item.count });
   });
@@ -121,7 +122,7 @@ const getChart = (competitionByCategory: any) => {
 
   _option && _myChart.setOption(_option);
 };
-
+// 预载信息
 onMounted(async () => {
   const competitionStore = useCompetitionStore();
   competitionByCategory.value = await competitionStore.categoryShowcaseContest(
@@ -129,6 +130,7 @@ onMounted(async () => {
   );
   getChart(competitionByCategory.value.data);
 });
+// 竞赛类型
 
 const onSelectChange = async () => {
   competitionByCategory.value = await competitionStore.categoryShowcaseContest(
@@ -136,64 +138,63 @@ const onSelectChange = async () => {
   );
   getChart(competitionByCategory.value.data);
 };
+// 具体竞赛参数详情
 const _onSelectChange = async () => {
   competitionRegisterInfo.value = await competitionStore.getCompetitionRegister(
     competitionName.value
   );
-  console.log(competitionRegisterInfo.value);
 };
 </script>
 
 <template>
   <h1>竞赛报名情况</h1>
-  <div
-    style="
-      display: flex;
-      justify-content: flex-start;
-      gap: 10px;
-      margin-left: 20px;
-    "
-  >
-    <div>
-      <div style="float: left">
-        <span style="color: #999; font-size: 14px">分类展示：</span>
-        <el-select
-          @change="onSelectChange"
-          v-model="type"
-          placeholder="Select"
-          size="small"
-          style="width: 120px"
-        >
-          <el-option
-            v-for="item in typeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </div>
-      <div style="display: flex; justify-content: space-around">
-        <div id="main" style="width: 600px; height: 400px" :key="type"></div>
-      </div>
-    </div>
-    <div style="float: left">
-      <span style="color: #999; font-size: 14px">竞赛详情：</span>
-      <el-select
-        @change="_onSelectChange"
-        v-model="competitionName"
-        placeholder="Select"
-        size="small"
-        style="width: 120px"
-      >
-        <el-option
-          v-for="item in competitionNameOptions"
-          :key="item"
-          :label="item"
-          :value="item"
-        />
-      </el-select>
+  <div class="chart-box">
+    <div class="chart-box">
       <div>
-        <el-table :data="competitionRegisterInfo.data" style="width: 100%">
+        <div style="color: #999; font-size: 14px">
+          分类展示：<el-select
+            @change="onSelectChange"
+            v-model="type"
+            placeholder="Select"
+            size="small"
+            style="width: 120px"
+          >
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </div>
+
+        <div style="display: flex; justify-content: space-around">
+          <div id="main" style="width: 800px; height: 400px" :key="type"></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="color: #999; font-size: 14px">
+          竞赛详情：
+          <el-select
+            @change="_onSelectChange"
+            v-model="competitionName"
+            placeholder="Select"
+            size="small"
+            style="width: 120px"
+          >
+            <el-option
+              v-for="item in competitionNameOptions"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
+        </div>
+        <el-table
+          :data="competitionRegisterInfo.data"
+          style="width: 100%; border-radius: 20px"
+        >
           <el-table-column prop="realName" label="姓名" width="180" />
           <el-table-column prop="schoolName" label="学校" width="180" />
           <el-table-column prop="className" label="省份" />
@@ -203,4 +204,14 @@ const _onSelectChange = async () => {
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.chart-box {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #eeeeee;
+}
+</style>

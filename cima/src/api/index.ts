@@ -1,4 +1,7 @@
 import { apiConfig } from "@/config";
+import { ElMessage } from "element-plus";
+
+import router from "@/router";
 import axios from "axios";
 const request = axios.create({
   baseURL: apiConfig.directUrl,
@@ -25,8 +28,16 @@ request.interceptors.response.use(
     return response;
   },
   function (error) {
-    // 超出 2xx 范围的状态码都会触发该函数。
-    // 对响应错误做点什么
+    if (error.response.status === 500) {
+      localStorage.removeItem("token");
+      ElMessage({
+        showClose: true,
+        message: error as string,
+        type: "error",
+      });
+      // 引导用户返回到登录页面
+      router.push("/login");
+    }
     return Promise.reject(error);
   }
 );

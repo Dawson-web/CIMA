@@ -9,10 +9,11 @@ const loginForm = ref({
   username: "",
   password: "",
 });
-
+// 登录
 const onSubmit = async () => {
   const useAccount = useAccountStore();
   await useAccount.login(loginForm.value);
+  // 检测数据
   if (loginForm.value.username == "" || loginForm.value.password == "") {
     ElMessage({
       type: "info",

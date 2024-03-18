@@ -7,7 +7,7 @@ import NavBar from "@/components/NavBar.vue";
     <header>
       <NavBar compact />
     </header>
-    <main>
+    <main class="main">
       <h2 class="slogan">全国中小学生</h2>
       <h1 class="title">竞赛信息管理系统</h1>
       <h3 class="status">Get Start From Now ~</h3>
@@ -35,13 +35,19 @@ header {
 
 main {
   margin: 0 auto;
-  max-width: $app-max-width;
+  max-width: 80%;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 12svh;
-
+  background-color: #33333337;
+  padding: 3rem;
+  border-radius: 30px;
+  transition: all 0.5s ease;
+  &:hover {
+    transform: scale(1.01);
+  }
   @media (max-height: $mobile-height-breakpoint) {
     margin-top: 10svh;
   }

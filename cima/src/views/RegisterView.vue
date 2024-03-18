@@ -3,7 +3,9 @@ import DotBackground from "@/components/DotBackground.vue";
 import NavBar from "@/components/NavBar.vue";
 import router from "@/router";
 import { useAccountStore } from "@/store/account";
+import { ElMessage } from "element-plus";
 import { ref } from "vue";
+
 const registerForm = ref({
   username: "",
   password: "",
@@ -47,9 +49,14 @@ const province = [
   "上海市",
   "重庆市",
 ];
+// 提交注册信息表
 const onSubmit = async () => {
   const useAccount = useAccountStore();
   await useAccount.register(registerForm.value);
+  ElMessage({
+    type: "success",
+    message: "账号注册成功",
+  });
   router.push("/login");
 };
 </script>

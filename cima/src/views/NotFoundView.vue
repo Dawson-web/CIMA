@@ -1,5 +1,5 @@
 <script setup></script>
-
+<!-- 此组件用于展示404不存在页面 -->
 <template>
   <div>
     <main>
