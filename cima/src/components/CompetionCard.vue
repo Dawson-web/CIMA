@@ -144,8 +144,6 @@ const exportCompetition = async () => {
         >
       </div>
     </el-dialog>
-    <el-button text type="primary">导入竞赛信息</el-button>
-
     <el-button type="primary" @click="exportCompetition"
       >导出全部竞赛信息</el-button
     >
