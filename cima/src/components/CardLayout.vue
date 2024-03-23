@@ -31,6 +31,7 @@ let newPasswordInfo = ref({
   password: "",
 });
 let keyword = ref("");
+let createVisible = ref(false);
 
 const useAccount = useAccountStore();
 const competitionStore = useCompetitionStore();
@@ -166,7 +167,6 @@ const loginOut = () => {
               />
             </el-menu-item>
           </el-menu>
-
           <div @click="dialogFormVisible = true">
             <el-avatar
               src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"

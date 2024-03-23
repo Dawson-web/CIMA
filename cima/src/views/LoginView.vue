@@ -13,6 +13,9 @@ const loginForm = ref({
 const onSubmit = async () => {
   const useAccount = useAccountStore();
   await useAccount.login(loginForm.value);
+  if (loginForm.value.username === "admin")
+    localStorage.setItem("user", "admin");
+  // 登录成功
   // 检测数据
   if (loginForm.value.username == "" || loginForm.value.password == "") {
     ElMessage({

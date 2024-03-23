@@ -9,7 +9,7 @@ import NavBar from "@/components/NavBar.vue";
     </header>
     <main class="main">
       <h2 class="slogan">全国中小学生</h2>
-      <h1 class="title">竞赛信息管理系统</h1>
+      <h1 class="title">竞赛信息管理及分析平台</h1>
       <h3 class="status">Get Start From Now ~</h3>
       <div class="register-btn-wrapper">
         <div class="shadow"></div>
@@ -54,7 +54,7 @@ main {
 
   .title {
     margin-block: 1rem;
-    font-size: clamp(4rem, 10vw, 8rem);
+    font-size: clamp(3rem, 7.5vw, 6rem);
     background-image: linear-gradient(135deg, #2ad3ca 0%, #00a7df 100%);
     background-clip: text;
     -webkit-background-clip: text;

@@ -4,11 +4,16 @@ import type { loginForm, registerForm } from "../api/models";
 import {
   getAccountInfoAPI,
   getCompetitionSelfRegisterAPI,
+  getCompetitionUserLikeAPI,
   loginAPI,
   registerAPI,
   submitCompetitionRegisterAPI,
   updateAccountInfoAPI,
   updatePasswordAPI,
+  addCompetitionAPI,
+  deleteCompetitionAPI,
+  readCompetitionAPI,
+  exportCompetitionAPI,
 } from "../api/types";
 export const useAccountStore = defineStore("account", () => {
   const account = ref({ data: null });
@@ -79,7 +84,53 @@ export const useAccountStore = defineStore("account", () => {
       console.error("Failed to fetch Self Competition Register Info:", e);
     }
   }
+  async function getCompetitionUserLike() {
+    try {
+      const res = await getCompetitionUserLikeAPI(
+        localStorage.getItem("token")
+      );
+      return res.data;
+    } catch (e) {
+      console.error("Failed to fetch Self Competition Register Info:", e);
+    }
+  }
 
+  async function addCompetition(form: any) {
+    try {
+      const res = await addCompetitionAPI(localStorage.getItem("token"), form);
+      return res.data;
+    } catch (e) {
+      console.error("Failed to fetch Self Competition Register Info:", e);
+    }
+  }
+  async function deleteCompetition(name: string) {
+    try {
+      const res = await deleteCompetitionAPI(
+        localStorage.getItem("token"),
+        name
+      );
+      return res.data;
+    } catch (e) {
+      console.error("Failed to fetch Self Competition Register Info:", e);
+    }
+  }
+
+  async function readCompetition(file: any) {
+    try {
+      const res = await readCompetitionAPI(file);
+      return res.data;
+    } catch (e) {
+      console.error("Failed to fetch Self Competition Register Info:", e);
+    }
+  }
+  async function exportCompetition() {
+    try {
+      const res = await exportCompetitionAPI();
+      return res;
+    } catch (e) {
+      console.error("Failed to fetch Self Competition Register Info:", e);
+    }
+  }
   return {
     account,
     _token,
@@ -90,5 +141,10 @@ export const useAccountStore = defineStore("account", () => {
     updatePassword,
     submitCompetitionRegister,
     getCompetitionSelfRegister,
+    getCompetitionUserLike,
+    addCompetition,
+    deleteCompetition,
+    readCompetition,
+    exportCompetition,
   };
 });

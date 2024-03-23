@@ -38,6 +38,15 @@ export const getCompetitionGroupAPI = (group: string) => {
     },
   });
 };
+export const getCompetitionUserLikeAPI = (_token: any) => {
+  return request({
+    method: "GET",
+    url: `/registration/likes`,
+    headers: {
+      token: _token,
+    },
+  });
+};
 
 export const getCompetitionRegisterAPI = (
   _token: any,
@@ -135,5 +144,45 @@ export const categoryShowcaseContestAPI = (_token: any, search: number) => {
     params: {
       search: search,
     },
+  });
+};
+
+export const addCompetitionAPI = (_token: any, form: any) => {
+  return request({
+    method: "POST",
+    url: "/competition/add",
+    headers: {
+      token: _token,
+    },
+    data: form,
+  });
+};
+
+export const deleteCompetitionAPI = (_token: any, competition_name: string) => {
+  return request({
+    method: "POST",
+    url: "/competition/delete",
+    headers: {
+      token: _token,
+    },
+    params: {
+      competition_name,
+    },
+  });
+};
+
+export const readCompetitionAPI = (file: any) => {
+  return request({
+    method: "POST",
+    url: "/competition/read",
+    data: file,
+  });
+};
+
+export const exportCompetitionAPI = () => {
+  return request({
+    method: "GET",
+    url: "/competition/export",
+    responseType: "blob",
   });
 };

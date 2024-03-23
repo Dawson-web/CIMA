@@ -10,7 +10,7 @@ const registerForm = ref({
   username: "",
   password: "",
   realName: "",
-  hobbies: "",
+  hobbies: [],
   age: 1,
   grade: 0,
   school: "",
@@ -49,8 +49,19 @@ const province = [
   "上海市",
   "重庆市",
 ];
+const hobbies = [
+  { label: "数学", value: "1" },
+  { label: "计算机科学", value: "2" },
+  { label: "文学", value: "3" },
+  { label: "自然科学", value: "4" },
+  { label: "科研创新", value: "5" },
+  { label: "绘画", value: "6" },
+  { label: "体育运动", value: "7" },
+  { label: "百科知识", value: "8" },
+];
 // 提交注册信息表
 const onSubmit = async () => {
+  registerForm.value.hobbies = registerForm.value.hobbies.join(",");
   const useAccount = useAccountStore();
   await useAccount.register(registerForm.value);
   ElMessage({
@@ -84,7 +95,15 @@ const onSubmit = async () => {
             <ElInput type="realName" v-model="registerForm.realName" />
           </ElFormItem>
           <ElFormItem label="爱好:">
-            <ElInput type="hobbies" v-model="registerForm.hobbies" />
+            <el-checkbox-group v-model="registerForm.hobbies">
+              <el-checkbox
+                v-for="item in hobbies"
+                :label="item.value"
+                :value="item.value"
+                :key="item.value"
+                >{{ item.label }}</el-checkbox
+              >
+            </el-checkbox-group>
           </ElFormItem>
           <ElFormItem label="学校:">
             <ElInput type="school" v-model="registerForm.school" />

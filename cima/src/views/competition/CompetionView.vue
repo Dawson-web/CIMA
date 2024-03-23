@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import CompetionCard from "@/components/CompetionCard.vue";
+import { useAccountStore } from "@/store/account";
 import { useCompetitionStore } from "@/store/competion";
 import { onMounted, ref } from "vue";
 
 const competitionStore = useCompetitionStore();
+const account = useAccountStore();
 const competitionDatas = ref([]);
+const competionUserLike = ref([]);
 
 const group = ref("全部");
 const groupOptions = [
@@ -29,6 +32,8 @@ const groupOptions = [
 onMounted(async () => {
   const competitionStore = useCompetitionStore();
   competitionDatas.value = await competitionStore.getCompetitionData();
+  competionUserLike.value = await account.getCompetitionUserLike();
+  console.log(competionUserLike.value);
 });
 // 切换年级分组
 const onGroupChange = async () => {
@@ -46,8 +51,22 @@ const onGroupChange = async () => {
   <div class="competion-view">
     <div>
       <el-carousel indicator-position="outside">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <h3 text="2xl" justify="center">{{ item }}</h3>
+        <el-carousel-item
+          v-for="item in competionUserLike.data"
+          :key="item.competitionName"
+          ><h3 class="small justify-center" text="2xl">
+            {{ item.competitionName }}
+          </h3>
+          <p>年龄段： {{ item.competitionGroup }}</p>
+          <p>举办方： {{ item.competitionOrganizer }}</p>
+          <p>竞赛类型： {{ item.competitionType }}</p>
+          <el-link
+            class="link"
+            type="primary"
+            target="_blank"
+            :href="item.competitionWeb"
+            >{{ item.competitionWeb }}</el-link
+          >
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -75,16 +94,16 @@ const onGroupChange = async () => {
 </template>
 
 <style scoped lang="scss">
-.competion-view {
-  width: 100%;
-  height: 100%;
+.demonstration {
+  color: var(--el-text-color-secondary);
 }
+
 .el-carousel__item h3 {
-  display: flex;
   color: #475669;
   opacity: 0.75;
-  line-height: 300px;
+  line-height: 150px;
   margin: 0;
+  text-align: center;
 }
 
 .el-carousel__item:nth-child(2n) {
