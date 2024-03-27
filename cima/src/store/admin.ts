@@ -1,10 +1,13 @@
 import {
   adminAddTeacherAPI,
   adminAddUserAPI,
+  adminDeleteTeacherAPI,
   adminDeleteUserAPI,
+  adminGetTeacherInfoAPI,
   adminGetUserInfoAPI,
   adminLoginAPI,
   adminLogoutAPI,
+  adminUpdateTeacherAPI,
   adminUpdateUserAPI,
 } from "@/api/types";
 import { defineStore } from "pinia";
@@ -39,13 +42,14 @@ export const useAdminStore = defineStore("admin", () => {
     await adminAddTeacherAPI(form);
   };
   const adminUpdateTeacher = async (form: any) => {
-    await adminUpdateTeacher(form);
+    await adminUpdateTeacherAPI(form);
   };
   const adminDeleteTeacher = async (id: number) => {
-    await adminDeleteTeacher(id);
+    await adminDeleteTeacherAPI(id);
   };
   const adminGetTeacherInfo = async (form: any) => {
-    await adminGetTeacherInfo(form);
+    const res = await adminGetTeacherInfoAPI(form);
+    return res.data.data;
   };
   return {
     _token,

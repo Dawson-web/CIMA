@@ -3,10 +3,11 @@ import { defineStore } from "pinia";
 
 export const usePublicStore = defineStore("public", () => {
   const addComment = async (form: any) => {
-    await addCommentAPI(form);
+    await addCommentAPI(localStorage.getItem("token"), form);
   };
   const getComment = async (id: number) => {
-    await getCommentAPI(id);
+    const res = await getCommentAPI(id);
+    return res.data.data;
   };
   const deleteComment = async (id: number) => {
     await deleteCommentAPI(id);

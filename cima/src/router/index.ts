@@ -34,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
     redirect: { name: "dashboard-competitions" },
     children: [
       {
+        path: "/dashboard/teachermanage",
+        name: "teacher-manage",
+        component: TeacherInfoManageView,
+      },
+      {
         path: "competitions",
         name: "dashboard-competitions",
         component: CompetionViewVue,
@@ -62,11 +67,6 @@ const routes: Array<RouteRecordRaw> = [
         path: "competitions/comment",
         name: "competitions-comment",
         component: AdminCommentControlView,
-      },
-      {
-        path: "/teachermanage",
-        name: "teacher-manage",
-        component: TeacherInfoManageView,
       },
     ],
   },

@@ -248,7 +248,7 @@ export const adminDeleteTeacherAPI = (id: number) => {
   return request({
     method: "POST",
     url: "/admin/delete-user",
-    params: id,
+    params: { id: id },
   });
 };
 export const adminGetTeacherInfoAPI = (form: any) => {
@@ -261,11 +261,14 @@ export const adminGetTeacherInfoAPI = (form: any) => {
 
 // 评论
 
-export const addCommentAPI = (form: any) => {
+export const addCommentAPI = (_token: any, form: any) => {
   return request({
     method: "POST",
     url: "/content/addContent",
     data: form,
+    headers: {
+      token: _token,
+    },
   });
 };
 export const getCommentAPI = (competitionId: number) => {
