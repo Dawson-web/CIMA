@@ -184,10 +184,18 @@ const judgeUserType = () => {
             <el-menu-item index="4" route="/dashboard/competitions/comment">
               竞赛评论
             </el-menu-item>
-            <el-menu-item index="5" route="/dashboard/teachermanage">
+            <el-menu-item
+              index="5"
+              route="/dashboard/teachermanage"
+              v-if="judgeUserType()"
+            >
               教师管理
             </el-menu-item>
-            <el-menu-item index="6" route="/dashboard/competitions">
+            <el-menu-item
+              index="6"
+              route="/dashboard/competitions"
+              v-if="judgeUserType()"
+            >
               用户管理
             </el-menu-item>
             <el-menu-item
