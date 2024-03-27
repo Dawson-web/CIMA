@@ -2,18 +2,18 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { loginForm, registerForm } from "../api/models";
 import {
+  addCompetitionAPI,
+  deleteCompetitionAPI,
+  exportCompetitionAPI,
   getAccountInfoAPI,
   getCompetitionSelfRegisterAPI,
   getCompetitionUserLikeAPI,
   loginAPI,
+  readCompetitionAPI,
   registerAPI,
   submitCompetitionRegisterAPI,
   updateAccountInfoAPI,
   updatePasswordAPI,
-  addCompetitionAPI,
-  deleteCompetitionAPI,
-  readCompetitionAPI,
-  exportCompetitionAPI,
 } from "../api/types";
 export const useAccountStore = defineStore("account", () => {
   const account = ref({ data: null });
@@ -33,8 +33,9 @@ export const useAccountStore = defineStore("account", () => {
   async function login(form: loginForm) {
     try {
       const res = await loginAPI(form);
-
-      _token.value = res.data;
+      if (res.data.data != "密码错误") {
+        localStorage.setItem("token", res.data.data);
+      }
     } catch (e) {
       console.error("Failed to fetch account data:", e);
     }

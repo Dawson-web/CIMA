@@ -33,7 +33,7 @@ onMounted(async () => {
   const competitionStore = useCompetitionStore();
   competitionDatas.value = await competitionStore.getCompetitionData();
   competionUserLike.value = await account.getCompetitionUserLike();
-  console.log(competionUserLike.value);
+  console.log(competitionDatas.value);
 });
 // 切换年级分组
 const onGroupChange = async () => {

@@ -15,7 +15,7 @@ export const useCompetitionStore = defineStore("competition", () => {
   async function getCompetitionData() {
     try {
       const res = await getCompetitionDataAPI();
-      return res.data;
+      return res.data.data;
     } catch (e) {
       console.error("Failed to fetch competition data:", e);
     }
@@ -23,7 +23,7 @@ export const useCompetitionStore = defineStore("competition", () => {
   async function getCompetitionDetail() {
     try {
       const res = await getCompetitionDetailAPI(serachKeyword.value);
-      return res.data;
+      return res.data.data;
     } catch (e) {
       console.error("Failed to fetch competition data by keyword :", e);
     }
@@ -32,7 +32,7 @@ export const useCompetitionStore = defineStore("competition", () => {
   async function getCompetitionGroup(group: string) {
     try {
       const res = await getCompetitionGroupAPI(group);
-      return res.data;
+      return res.data.data;
     } catch (e) {
       console.error("Failed to fetch competition data by group:", e);
     }

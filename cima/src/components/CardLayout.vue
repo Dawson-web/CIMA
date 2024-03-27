@@ -31,7 +31,6 @@ let newPasswordInfo = ref({
   password: "",
 });
 let keyword = ref("");
-let createVisible = ref(false);
 
 const useAccount = useAccountStore();
 const competitionStore = useCompetitionStore();
@@ -122,6 +121,10 @@ const loginOut = () => {
       });
     });
 };
+// 判断用户权限
+const judgeUserType = () => {
+  return localStorage.getItem("user") === "admin";
+};
 </script>
 
 <template>
@@ -138,33 +141,59 @@ const loginOut = () => {
             style="width: 80%"
             router="true"
           >
+            <el-input
+              v-model="keyword"
+              @keyup.enter="onSearch"
+              autosize
+              style="width: 300px"
+              placeholder="回车(Enter)查询"
+              :suffix-icon="Search"
+            />
             <el-menu-item index="1" route="/dashboard/competitions">
               竞赛信息
             </el-menu-item>
             <el-sub-menu index="2">
               <template #title>报名</template>
               <el-menu-item
+                index="2-2"
+                route="/dashboard/competitions/registerinfo"
+                >竞赛报名情况</el-menu-item
+              >
+              <el-menu-item
+                v-if="!judgeUserType()"
                 index="2-3"
                 route="/dashboard/competitions/selfregisterinfo"
                 >个人报名情况</el-menu-item
               >
               <el-menu-item
-                index="2-2"
-                route="/dashboard/competitions/registerinfo"
-                >竞赛报名情况</el-menu-item
+                index="2-1"
+                route="/dashboard/competitions"
+                v-if="judgeUserType()"
               >
+                报名信息处理
+              </el-menu-item>
             </el-sub-menu>
+
+            <el-menu-item
+              index="3"
+              route="/dashboard/competitions/control"
+              v-if="judgeUserType()"
+            >
+              竞赛设置
+            </el-menu-item>
+            <el-menu-item index="4" route="/dashboard/competitions/comment">
+              竞赛评论
+            </el-menu-item>
+            <el-menu-item index="5" route="/dashboard/teachermanage">
+              教师管理
+            </el-menu-item>
+            <el-menu-item index="6" route="/dashboard/competitions">
+              用户管理
+            </el-menu-item>
             <el-menu-item
               class="flex gap-4 mb-4 items-center"
               style="margin-left: 5%"
             >
-              <el-input
-                v-model="keyword"
-                @keyup.enter="onSearch"
-                style="width: 500px"
-                placeholder="查询"
-                :suffix-icon="Search"
-              />
             </el-menu-item>
           </el-menu>
           <div @click="dialogFormVisible = true">

@@ -186,3 +186,121 @@ export const exportCompetitionAPI = () => {
     responseType: "blob",
   });
 };
+
+// 管理员
+export const adminLoginAPI = (form: any) => {
+  return request({
+    method: "POST",
+    url: "/admin/login",
+    data: form,
+  });
+};
+
+export const adminLogoutAPI = () => {
+  return request({
+    method: "POST",
+    url: "/admin/logout",
+  });
+};
+export const adminAddUserAPI = (form: any) => {
+  return request({
+    method: "POST",
+    url: "/admin/addUser",
+    data: form,
+  });
+};
+export const adminUpdateUserAPI = (form: any) => {
+  return request({
+    method: "POST",
+    url: "/admin/updateUser",
+    data: form,
+  });
+};
+export const adminDeleteUserAPI = (id: number) => {
+  return request({
+    method: "POST",
+    url: "/admin/deleteUser",
+    params: id,
+  });
+};
+export const adminGetUserInfoAPI = (form: any) => {
+  return request({
+    method: "GET",
+    url: "/admin/user-info",
+    data: form,
+  });
+};
+export const adminAddTeacherAPI = (form: any) => {
+  return request({
+    method: "POST",
+    url: "/admin/add-teacher",
+    data: form,
+  });
+};
+export const adminUpdateTeacherAPI = (form: any) => {
+  return request({
+    method: "POST",
+    url: "/admin/update-teacher",
+    data: form,
+  });
+};
+export const adminDeleteTeacherAPI = (id: number) => {
+  return request({
+    method: "POST",
+    url: "/admin/delete-user",
+    params: id,
+  });
+};
+export const adminGetTeacherInfoAPI = (form: any) => {
+  return request({
+    method: "POST",
+    url: "/admin/get-teacher",
+    data: form,
+  });
+};
+
+// 评论
+
+export const addCommentAPI = (form: any) => {
+  return request({
+    method: "POST",
+    url: "/content/addContent",
+    data: form,
+  });
+};
+export const getCommentAPI = (competitionId: number) => {
+  return request({
+    method: "GET",
+    url: "/content/" + competitionId,
+  });
+};
+export const deleteCommentAPI = (contentId: number) => {
+  return request({
+    method: "POST",
+    url: "/content/deleteContent",
+    params: contentId,
+  });
+};
+// 老师
+
+export const getSchoolInfoAPI = (form: any) => {
+  return request({
+    method: "GET",
+    url: "/teacher/get-infos",
+    data: form,
+  });
+};
+export const agreeRegistrationAPI = (rs: number) => {
+  return request({
+    method: "POST",
+    url: "/teacher/agree",
+    params: rs,
+  });
+};
+export const disagreeRegistrationAPI = (rs: number) => {
+  return request({
+    method: "POST",
+    url: "/teacher/disagree",
+    params: rs,
+  });
+};

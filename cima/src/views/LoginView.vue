@@ -3,8 +3,11 @@ import DotBackground from "@/components/DotBackground.vue";
 import NavBar from "@/components/NavBar.vue";
 import router from "@/router";
 import { useAccountStore } from "@/store/account";
+import { useAdminStore } from "@/store/admin";
 import { ElMessage } from "element-plus";
 import { ref } from "vue";
+
+const userType = ref("admin");
 const loginForm = ref({
   username: "",
   password: "",
@@ -12,22 +15,22 @@ const loginForm = ref({
 // 登录
 const onSubmit = async () => {
   const useAccount = useAccountStore();
-  await useAccount.login(loginForm.value);
-  if (loginForm.value.username === "admin")
+  const useAdmin = useAdminStore();
+  if (userType.value == "user") {
+    await useAccount.login(loginForm.value);
+    localStorage.setItem("user", "user");
+  } else {
+    await useAdmin.adminLogin(loginForm.value);
     localStorage.setItem("user", "admin");
-  // 登录成功
+  }
   // 检测数据
-  if (loginForm.value.username == "" || loginForm.value.password == "") {
+  if (localStorage.getItem("token")) {
+    router.push("/dashboard");
+  } else if (loginForm.value.username == "" || loginForm.value.password == "") {
     ElMessage({
       type: "info",
       message: "请正确输入账号和密码",
     });
-  } else if (
-    useAccount._token.data != "密码错误" &&
-    useAccount._token.data != null
-  ) {
-    localStorage.setItem("token", useAccount._token.data);
-    router.push("/dashboard");
   } else {
     ElMessage({
       type: "info",
@@ -45,6 +48,14 @@ const onSubmit = async () => {
     <main>
       <h1 class="title">登录 cIMA</h1>
       <div class="login-form-wrapper">
+        <el-radio-group
+          v-model="userType"
+          style="display: flex; justify-content: center"
+          @change="console.log(userType)"
+        >
+          <el-radio-button label="user" value="user">用户</el-radio-button>
+          <el-radio-button label="admin" value="admin">管理员</el-radio-button>
+        </el-radio-group>
         <ElForm label-position="top">
           <ElFormItem label="用户名">
             <ElInput type="usernmae" v-model="loginForm.username" />

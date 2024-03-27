@@ -2,6 +2,9 @@ import HomeViewVue from "@/views/HomeView.vue";
 import LoginViewVue from "@/views/LoginView.vue";
 import NotFoundViewVue from "@/views/NotFoundView.vue";
 import RegisterViewVue from "@/views/RegisterView.vue";
+import AdminCommentControlView from "@/views/admin/AdminCommentControlView.vue";
+import AdminCompetitionControlView from "@/views/admin/AdminCompetitionControlView.vue";
+import TeacherInfoManageView from "@/views/admin/TeacherInfoManageView.vue";
 import CompetionViewVue from "@/views/competition/CompetionView.vue";
 import CompetitionDetailViewVue from "@/views/competition/CompetitionDetailView.vue";
 import CompetitionRegisterViewVue from "@/views/competition/CompetitionRegisterView.vue";
@@ -50,8 +53,24 @@ const routes: Array<RouteRecordRaw> = [
         name: "register-info",
         component: CompetitionRegisterViewVue,
       },
+      {
+        path: "competitions/control",
+        name: "competitions-control",
+        component: AdminCompetitionControlView,
+      },
+      {
+        path: "competitions/comment",
+        name: "competitions-comment",
+        component: AdminCommentControlView,
+      },
+      {
+        path: "/teachermanage",
+        name: "teacher-manage",
+        component: TeacherInfoManageView,
+      },
     ],
   },
+
   {
     path: "/:pathMatch(.*)*",
     component: NotFoundViewVue,

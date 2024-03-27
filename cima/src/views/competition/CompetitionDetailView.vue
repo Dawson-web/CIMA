@@ -15,7 +15,7 @@ const competitionDatas = ref([]);
 onMounted(async () => {
   const competitionStore = useCompetitionStore();
   competitionDatas.value = await competitionStore.getCompetitionDetail();
-  if (competitionDatas.value.data.length === 0) {
+  if (competitionDatas.value.length === 0) {
     var newElement = document.createElement("h1"); // 创建一个新的div元素
     newElement.id = "newElement"; // 为新元素设置id
     newElement.innerHTML = "无相关比赛信息"; // 设置元素的内容

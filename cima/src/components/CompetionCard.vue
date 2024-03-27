@@ -17,13 +17,6 @@ const competitionRegisterForm = ref({
   province: "",
 });
 
-const createVisible = ref(false);
-const newCompetitionForm = ref({});
-
-const judgeUserType = () => {
-  return localStorage.getItem("user") === "admin";
-};
-
 // 预载
 onMounted(async () => {
   accountInfo.value = await useAccount.getAccountInfo();
@@ -46,113 +39,11 @@ const onSubmitRegister = () => {
   useAccount.submitCompetitionRegister(competitionRegisterForm.value);
   ElMessage.success("报名成功");
 };
-
-const createCompetition = () => {
-  createVisible.value = true;
-};
-
-const cancleCreateCompetition = () => {
-  createVisible.value = false;
-  newCompetitionForm.value = {};
-};
-const doCreateCompetition = async () => {
-  createVisible.value = false;
-  await useAccount.addCompetition(newCompetitionForm.value);
-  newCompetitionForm.value = {};
-};
-const deleteCompetition = async (name: string) => {
-  await useAccount.deleteCompetition(name);
-  ElMessage({
-    type: "success",
-    message: "竞赛删除成功",
-  });
-  location.reload();
-};
-const exportCompetition = async () => {
-  const res = await useAccount.exportCompetition();
-  const url = window.URL.createObjectURL(new Blob([res]));
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", "competition.xlsx"); // 设定下载的文件名
-  document.body.appendChild(link);
-  link.click();
-};
 </script>
 <template>
   <div>
-    <el-button type="primary" v-if="judgeUserType()" @click="createCompetition"
-      >新增竞赛信息</el-button
-    >
-    <el-dialog
-      v-model="createVisible"
-      title="发布作业"
-      width="600"
-      class="info-card"
-    >
-      <el-form label-width="auto" :model="newCompetitionForm" class="info-form">
-        <el-form-item label="名称">
-          <el-input
-            v-model="newCompetitionForm.competitionName"
-            class="input-field"
-          />
-        </el-form-item>
-
-        <el-form-item label="介绍">
-          <el-input
-            v-model="newCompetitionForm.competitionDesc"
-            class="input-field"
-          />
-        </el-form-item>
-
-        <el-form-item label="学龄段">
-          <el-input
-            v-model="newCompetitionForm.competitionGroup"
-            class="input-field"
-          />
-        </el-form-item>
-
-        <el-form-item label="举办方">
-          <el-input
-            v-model="newCompetitionForm.competitionOrganizer"
-            class="input-field"
-          />
-        </el-form-item>
-
-        <el-form-item label="类型">
-          <el-input
-            v-model="newCompetitionForm.competitionType"
-            class="input-field"
-          />
-        </el-form-item>
-
-        <el-form-item label="网站">
-          <el-input
-            v-model="newCompetitionForm.competitionWeb"
-            class="input-field"
-          />
-        </el-form-item>
-      </el-form>
-      <div class="button-container">
-        <el-button @click="cancleCreateCompetition" class="update-button"
-          >取消</el-button
-        >
-        <el-button
-          type="primary"
-          @click="doCreateCompetition"
-          class="confirm-button"
-          >发布</el-button
-        >
-      </div>
-    </el-dialog>
-    <el-button type="primary" @click="exportCompetition"
-      >导出全部竞赛信息</el-button
-    >
     <el-row :gutter="12">
-      <el-col
-        :span="8"
-        v-for="item in props.competitionDatas.data"
-        :key="item.id"
-      >
+      <el-col :span="8" v-for="item in props.competitionDatas" :key="item.id">
         <el-card shadow="hover" class="competion-card"
           ><h4>
             <el-button
@@ -168,14 +59,6 @@ const exportCompetition = async () => {
               "
             >
               {{ item.competitionName }}</el-button
-            >
-            <el-button
-              text
-              type="danger"
-              v-if="judgeUserType()"
-              @click="deleteCompetition(item.competitionName)"
-            >
-              删除</el-button
             >
           </h4>
 
