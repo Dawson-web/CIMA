@@ -1,5 +1,8 @@
 <template>
-  <div id="competitionDetail">
+  <div
+    id="competitionDetail"
+    style="padding: 20px; border-radius: 20px; background-color: #eeeeee"
+  >
     <CompetionCard :competitionDatas="competitionDatas" />
   </div>
 </template>

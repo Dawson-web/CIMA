@@ -24,8 +24,8 @@ export const useAccountStore = defineStore("account", () => {
   async function getAccountInfo() {
     try {
       const res = await getAccountInfoAPI(localStorage.getItem("token"));
-      account.value = res.data;
-      return res.data;
+      account.value = res.data.data;
+      return res.data.data;
     } catch (e) {
       console.error("Failed to fetch account data:", e);
     }
@@ -64,12 +64,7 @@ export const useAccountStore = defineStore("account", () => {
 
   async function submitCompetitionRegister(form: any) {
     try {
-      await submitCompetitionRegisterAPI(localStorage.getItem("token"), {
-        province: form.province,
-        competitionName: form.competitionName,
-        competitionType: form.competitionType,
-        schoolName: form.schoolName,
-      });
+      await submitCompetitionRegisterAPI(localStorage.getItem("token"), form);
     } catch (e) {
       console.error("Failed to fetch Register Competition:", e);
     }

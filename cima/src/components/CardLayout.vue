@@ -34,11 +34,12 @@ let keyword = ref("");
 
 const useAccount = useAccountStore();
 const competitionStore = useCompetitionStore();
+const isCollapse = ref(false);
 // 预载
 onMounted(async () => {
   const useAccount = useAccountStore();
   await useAccount.getAccountInfo();
-  accountInfo = useAccount.account.data;
+  accountInfo = useAccount.account;
 });
 // 更改用户信息
 const onSubmitAccountInfo = async () => {
@@ -99,7 +100,6 @@ const onSearch = async () => {
 };
 // 退出登录
 const loginOut = () => {
-  dialogFormVisible.value = false;
   ElMessageBox.confirm("是否确认退出此账户?", "警告", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
@@ -114,7 +114,6 @@ const loginOut = () => {
       router.push("/login");
     })
     .catch(() => {
-      dialogFormVisible.value = true;
       ElMessage({
         type: "info",
         message: "已取消此操作",
@@ -129,88 +128,96 @@ const judgeUserType = () => {
 
 <template>
   <div class="card-layout">
-    <section>
-      <div class="common-layout">
-        <div class="flex-grow">
-          <el-menu
-            ellipsis
-            class="el-menu-popper-demo"
-            mode="horizontal"
-            :popper-offset="16"
-            default-active="1"
-            style="width: 80%"
-            router="true"
-          >
-            <el-input
-              v-model="keyword"
-              @keyup.enter="onSearch"
-              autosize
-              style="width: 300px"
-              placeholder="回车(Enter)查询"
-              :suffix-icon="Search"
-            />
-            <el-menu-item index="1" route="/dashboard/competitions">
-              竞赛信息
-            </el-menu-item>
-            <el-sub-menu index="2">
-              <template #title>报名</template>
-              <el-menu-item
-                index="2-2"
-                route="/dashboard/competitions/registerinfo"
-                >竞赛报名情况</el-menu-item
-              >
-              <el-menu-item
-                v-if="!judgeUserType()"
-                index="2-3"
-                route="/dashboard/competitions/selfregisterinfo"
-                >个人报名情况</el-menu-item
-              >
-              <el-menu-item
-                index="2-1"
-                route="/dashboard/competitions"
-                v-if="judgeUserType()"
-              >
-                报名信息处理
-              </el-menu-item>
-            </el-sub-menu>
-
-            <el-menu-item
-              index="3"
-              route="/dashboard/competitions/control"
-              v-if="judgeUserType()"
-            >
-              竞赛设置
-            </el-menu-item>
-            <el-menu-item index="4" route="/dashboard/competitions/comment">
-              竞赛评论
-            </el-menu-item>
-            <el-menu-item
-              index="5"
-              route="/dashboard/teachermanage"
-              v-if="judgeUserType()"
-            >
-              教师管理
-            </el-menu-item>
-            <el-menu-item
-              index="6"
-              route="/dashboard/competitions"
-              v-if="judgeUserType()"
-            >
-              用户管理
-            </el-menu-item>
-            <el-menu-item
-              class="flex gap-4 mb-4 items-center"
-              style="margin-left: 5%"
-            >
-            </el-menu-item>
-          </el-menu>
-          <div @click="dialogFormVisible = true">
-            <el-avatar
-              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            />
-          </div>
+    <aside>
+      <el-menu
+        default-active="1"
+        class="el-menu-vertical-demo"
+        router="true"
+        :collapse="isCollapse"
+      >
+        <div @click="dialogFormVisible = true">
+          <el-avatar
+            shape="square"
+            size="large "
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          />
         </div>
-      </div>
+        <el-input
+          v-model="keyword"
+          @keyup.enter="onSearch"
+          autosize
+          style="width: 90%; padding: 10px"
+          placeholder="回车(Enter)查询"
+          :suffix-icon="Search"
+        />
+
+        <el-menu-item index="1" route="/dashboard/competitions">
+          <el-icon><ChatDotSquare /></el-icon>
+          <template #title> 竞赛信息 </template>
+        </el-menu-item>
+        <el-sub-menu index="2">
+          <template #title
+            ><el-icon><Monitor /></el-icon> <span>报名 </span></template
+          >
+
+          <el-menu-item
+            index="2-1"
+            route="/dashboard/competitions"
+            v-if="judgeUserType()"
+          >
+            报名信息处理
+          </el-menu-item>
+          <el-menu-item index="2-2" route="/dashboard/competitions/registerinfo"
+            >竞赛报名情况</el-menu-item
+          >
+          <el-menu-item
+            index="2-3"
+            route="/dashboard/competitions/registerchart"
+            >竞赛Chart图</el-menu-item
+          >
+          <el-menu-item
+            v-if="!judgeUserType()"
+            index="2-4"
+            route="/dashboard/competitions/selfregisterinfo"
+            >个人报名情况</el-menu-item
+          >
+        </el-sub-menu>
+
+        <el-menu-item
+          index="3"
+          route="/dashboard/competitions/control"
+          v-if="judgeUserType()"
+        >
+          <el-icon><Menu /></el-icon>
+          <template #title>竞赛设置</template>
+        </el-menu-item>
+        <el-menu-item index="4" route="/dashboard/competitions/comment">
+          <el-icon><ChatLineRound /></el-icon>
+          <template #title> 竞赛评论</template>
+        </el-menu-item>
+        <el-menu-item
+          index="5"
+          route="/dashboard/teachermanage"
+          v-if="judgeUserType()"
+        >
+          <el-icon><Avatar /></el-icon>
+          <template #title> 教师管理</template>
+        </el-menu-item>
+        <el-menu-item
+          index="6"
+          route="/dashboard/competitions"
+          v-if="judgeUserType()"
+        >
+          <el-icon><UserFilled /></el-icon>
+          <template #title> 用户管理</template>
+        </el-menu-item>
+        <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
+          <el-radio-button :label="false">open</el-radio-button>
+          <el-radio-button :label="true">close</el-radio-button>
+        </el-radio-group>
+        <br />
+        <el-button type="danger" @click="loginOut"> 退出 </el-button>
+      </el-menu>
 
       <el-dialog v-model="dialogFormVisible" title="个人信息" width="500">
         <el-form v-if="FormVisible" class="dialog-content">
@@ -295,10 +302,6 @@ const judgeUserType = () => {
             >
               更改信息
             </el-button>
-
-            <el-button plain type="danger" @click="loginOut">
-              退出登录
-            </el-button>
           </el-form-item>
         </el-form>
         <el-form v-if="updateFormVisible" class="dialog-content">
@@ -344,7 +347,7 @@ const judgeUserType = () => {
           </el-form-item>
         </el-form>
       </el-dialog>
-    </section>
+    </aside>
     <section class="main">
       <slot name="main"></slot>
     </section>
@@ -356,9 +359,14 @@ const judgeUserType = () => {
 
 .card-layout {
   display: flex;
-  flex-direction: column;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  column-gap: 20px;
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
   .dialog-content {
     display: flex;
     flex-direction: column;
@@ -376,7 +384,5 @@ const judgeUserType = () => {
 
 .main {
   width: 100%;
-  height: 80vh;
-  margin-top: 20px;
 }
 </style>

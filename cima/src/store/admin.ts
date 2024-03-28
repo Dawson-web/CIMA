@@ -12,6 +12,7 @@ import {
 } from "@/api/types";
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { ref } from "vue";
 
 export const useAdminStore = defineStore("admin", () => {
   const _token = ref({ data: null });
@@ -51,6 +52,10 @@ export const useAdminStore = defineStore("admin", () => {
     const res = await adminGetTeacherInfoAPI(form);
     return res.data.data;
   };
+
+  const updateCompetitionPicture = async () => {
+    return await updateCompetitionPictureAPI();
+  };
   return {
     _token,
     adminLogin,
@@ -63,5 +68,6 @@ export const useAdminStore = defineStore("admin", () => {
     adminUpdateTeacher,
     adminDeleteTeacher,
     adminGetTeacherInfo,
+    updateCompetitionPicture,
   };
 });

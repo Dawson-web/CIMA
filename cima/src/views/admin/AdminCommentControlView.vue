@@ -25,7 +25,7 @@ const createComment = async () => {
 };
 </script>
 <template>
-  <div>
+  <div style="padding: 20px; border-radius: 20px; background-color: #eeeeee">
     <el-button type="primary" @click="createVisible = true">竞赛评价</el-button>
     <div style="color: #999; font-size: 14px">
       评价竞赛：

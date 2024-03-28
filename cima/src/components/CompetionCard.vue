@@ -13,8 +13,6 @@ const competitionDialogVisible = ref(false);
 const competitionRegisterForm = ref({
   competitionName: "",
   competitionType: "",
-  schoolName: "",
-  province: "",
 });
 
 // 预载
@@ -34,8 +32,11 @@ const refuseRegister = () => {
 // 比赛报名
 const onSubmitRegister = () => {
   competitionDialogVisible.value = false;
-  competitionRegisterForm.value.schoolName = accountInfo.value.data.school;
-  competitionRegisterForm.value.province = accountInfo.value.data.province;
+  competitionRegisterForm.value.school = accountInfo.value.school;
+  competitionRegisterForm.value.province = accountInfo.value.province;
+  competitionRegisterForm.value.realName = accountInfo.value.realName;
+  competitionRegisterForm.value.age = accountInfo.value.age;
+  competitionRegisterForm.value.grade = accountInfo.value.grade;
   useAccount.submitCompetitionRegister(competitionRegisterForm.value);
   ElMessage.success("报名成功");
 };
@@ -108,10 +109,19 @@ const onSubmitRegister = () => {
           />
         </el-form-item>
         <el-form-item label="学校:">
-          <el-input v-model="accountInfo.data.school" />
+          <el-input v-model="accountInfo.school" />
         </el-form-item>
         <el-form-item label="省份:">
-          <el-input v-model="accountInfo.data.province" />
+          <el-input v-model="accountInfo.province" />
+        </el-form-item>
+        <el-form-item label="真实姓名:">
+          <el-input v-model="accountInfo.realName" />
+        </el-form-item>
+        <el-form-item label="年龄:">
+          <el-input v-model="accountInfo.age" />
+        </el-form-item>
+        <el-form-item label="年纪:">
+          <el-input v-model="accountInfo.grade" />
         </el-form-item>
       </el-form>
       <template #footer>

@@ -48,7 +48,7 @@ const onGroupChange = async () => {
 </script>
 
 <template>
-  <div class="competion-view">
+  <div style="padding: 20px; border-radius: 20px; background-color: #eeeeee">
     <div>
       <el-carousel indicator-position="outside">
         <el-carousel-item

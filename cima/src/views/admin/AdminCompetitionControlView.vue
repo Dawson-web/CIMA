@@ -60,6 +60,12 @@ const dodeleteCompetition = async () => {
     <el-button type="primary" @click="createCompetition"
       >新增竞赛信息</el-button
     >
+    <el-button type="primary" @click="exportCompetition"
+      >导出全部竞赛信息</el-button
+    >
+    <el-button type="primary" @click="deleteCompetition"
+      >删除竞赛信息</el-button
+    >
     <el-dialog
       v-model="createVisible"
       title="发布作业"
@@ -121,13 +127,7 @@ const dodeleteCompetition = async () => {
         >
       </div>
     </el-dialog>
-    <el-button type="primary" @click="exportCompetition"
-      >导出全部竞赛信息</el-button
-    >
-    <el-button type="primary" @click="deleteCompetition"
-      >删除竞赛信息</el-button
-    >
-    <el-row :gutter="12">
+    <el-row :gutter="12" style="background-color: #eee">
       <el-col :span="8" :key="item" v-for="item in competitionDatas">
         <el-card shadow="hover" class="competion-card"
           ><h4>{{ item.competitionName }}</h4>

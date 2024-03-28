@@ -56,7 +56,7 @@ export const useCompetitionStore = defineStore("competition", () => {
         localStorage.getItem("token"),
         search
       );
-      return res.data;
+      return res.data.data;
     } catch (e) {
       console.error(
         "Failed to fetch competition data by category showcase contest:",

@@ -6,6 +6,7 @@ import AdminCommentControlView from "@/views/admin/AdminCommentControlView.vue";
 import AdminCompetitionControlView from "@/views/admin/AdminCompetitionControlView.vue";
 import TeacherInfoManageView from "@/views/admin/TeacherInfoManageView.vue";
 import CompetionViewVue from "@/views/competition/CompetionView.vue";
+import CompetitionChartVIew from "@/views/competition/CompetitionChartVIew.vue";
 import CompetitionDetailViewVue from "@/views/competition/CompetitionDetailView.vue";
 import CompetitionRegisterViewVue from "@/views/competition/CompetitionRegisterView.vue";
 import CompetitionSelfRegisterViewVue from "@/views/competition/CompetitionSelfRegisterView.vue";
@@ -57,6 +58,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "competitions/registerinfo",
         name: "register-info",
         component: CompetitionRegisterViewVue,
+      },
+      {
+        path: "competitions/registerchart",
+        name: "register-chart",
+        component: CompetitionChartVIew,
       },
       {
         path: "competitions/control",

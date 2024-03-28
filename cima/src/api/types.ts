@@ -1,6 +1,5 @@
 import request from ".";
 import type {
-  competitionRegisterForm,
   loginForm,
   passwordForm,
   registerForm,
@@ -11,11 +10,25 @@ export interface ApiResponse<Data> {
   data?: Data | null;
   msg?: null | string;
 }
-
+// 获取全部竞赛信息
 export const getCompetitionDataAPI = () => {
   return request({
     method: "GET",
     url: "/competition/infos",
+  });
+};
+// 上传竞赛图片
+export const updateCompetitionPictureAPI = (
+  competition_id: number,
+  file: any
+) => {
+  return request({
+    method: "POST",
+    url: "/competition/update-pic",
+    params: {
+      competition_id,
+    },
+    data: file,
   });
 };
 
@@ -120,10 +133,7 @@ export const getCompetitionSelfRegisterAPI = (_token: any) => {
   });
 };
 
-export const submitCompetitionRegisterAPI = (
-  _token: any,
-  form: competitionRegisterForm
-) => {
+export const submitCompetitionRegisterAPI = (_token: any, form: any) => {
   return request({
     method: "POST",
     url: "/registration/registration",

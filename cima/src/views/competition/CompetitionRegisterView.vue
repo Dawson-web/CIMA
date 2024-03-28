@@ -1,28 +1,10 @@
 <script setup lang="ts">
 import { useCompetitionStore } from "@/store/competion";
-import * as echarts from "echarts";
 import { onMounted, ref } from "vue";
 
 const competitionStore = useCompetitionStore();
 
-const type = ref(0);
-const competitionByCategory = ref([]);
-const typeOptions = [
-  {
-    value: 0,
-    label: "竞赛类型",
-  },
-  {
-    value: 1,
-    label: "省份",
-  },
-  {
-    value: 2,
-    label: "学校",
-  },
-];
-
-const competitionName = ref("");
+const competitionName = ref("世界机器人大会青少年机器人设计与信息素养大赛");
 
 const competitionNameOptions = ref([
   "全国青少年人工智能创新挑战赛",
@@ -71,136 +53,52 @@ const competitionNameOptions = ref([
   "全国青少年音乐素养大赛",
 ]);
 const competitionRegisterInfo = ref([]);
-// 获取图表
-const getChart = (competitionByCategory: any) => {
-  let Data = [];
-  // 数据格式化处理
-  competitionByCategory.forEach((item) => {
-    Data.push({ name: item.searchName, value: item.count });
-  });
 
-  let _chartDom = document.querySelector("#main");
-  let _myChart = echarts.init(_chartDom);
-
-  let _option = {
-    tooltip: {
-      trigger: "item",
-    },
-    legend: {
-      top: "0%",
-      left: "center",
-    },
-    series: [
-      {
-        name: "参数详情",
-        type: "pie",
-        radius: ["40%", "70%"],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: "#fff",
-          borderWidth: 2,
-        },
-        label: {
-          show: false,
-          position: "center",
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 15,
-            fontWeight: "bold",
-          },
-        },
-        labelLine: {
-          show: false,
-        },
-        data: Data,
-      },
-    ],
-  };
-
-  _option && _myChart.setOption(_option);
-};
-// 预载信息
-onMounted(async () => {
-  const competitionStore = useCompetitionStore();
-  competitionByCategory.value = await competitionStore.categoryShowcaseContest(
-    0
-  );
-  getChart(competitionByCategory.value.data);
-});
-// 竞赛类型
-
-const onSelectChange = async () => {
-  competitionByCategory.value = await competitionStore.categoryShowcaseContest(
-    type.value
-  );
-  getChart(competitionByCategory.value.data);
-};
-// 具体竞赛参数详情
-const _onSelectChange = async () => {
+const getCompetitionRegisterInfo = async () => {
   competitionRegisterInfo.value = await competitionStore.getCompetitionRegister(
     competitionName.value
   );
+};
+
+onMounted(async () => {
+  getCompetitionRegisterInfo();
+});
+
+// 具体竞赛参数详情
+const _onSelectChange = async () => {
+  getCompetitionRegisterInfo();
 };
 </script>
 
 <template>
   <h1>竞赛报名情况</h1>
   <div class="chart-box">
-    <div class="chart-box">
-      <div>
-        <div style="color: #999; font-size: 14px">
-          分类展示：<el-select
-            @change="onSelectChange"
-            v-model="type"
-            placeholder="Select"
-            size="small"
-            style="width: 120px"
-          >
-            <el-option
-              v-for="item in typeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-
-        <div style="display: flex; justify-content: space-around">
-          <div id="main" style="width: 800px; height: 400px" :key="type"></div>
-        </div>
-      </div>
-
-      <div>
-        <div style="color: #999; font-size: 14px">
-          竞赛详情：
-          <el-select
-            @change="_onSelectChange"
-            v-model="competitionName"
-            placeholder="Select"
-            size="small"
-            style="width: 120px"
-          >
-            <el-option
-              v-for="item in competitionNameOptions"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select>
-        </div>
-        <el-table
-          :data="competitionRegisterInfo.data"
-          style="width: 100%; border-radius: 20px"
-        >
-          <el-table-column prop="realName" label="姓名" width="180" />
-          <el-table-column prop="schoolName" label="学校" width="180" />
-          <el-table-column prop="className" label="省份" />
-        </el-table>
-      </div>
+    <div style="color: #999; font-size: 14px">
+      竞赛详情：
+      <el-select
+        @change="_onSelectChange"
+        v-model="competitionName"
+        placeholder="Select"
+        size="small"
+        style="width: 120px"
+      >
+        <el-option
+          v-for="item in competitionNameOptions"
+          :key="item"
+          :label="item"
+          :value="item"
+        />
+      </el-select>
     </div>
+    <hr />
+    <el-table
+      :data="competitionRegisterInfo.data"
+      style="width: 100%; border-radius: 20px"
+    >
+      <el-table-column prop="realName" label="姓名" width="180" />
+      <el-table-column prop="schoolName" label="学校" width="180" />
+      <el-table-column prop="className" label="省份" />
+    </el-table>
   </div>
 </template>
 
