@@ -5,54 +5,13 @@ import { onMounted, ref } from "vue";
 const competitionStore = useCompetitionStore();
 
 const competitionName = ref("世界机器人大会青少年机器人设计与信息素养大赛");
+const competitionNameOptions = ref([]);
 
-const competitionNameOptions = ref([
-  "全国青少年人工智能创新挑战赛",
-  "全国中小学信息技术创新与实践大赛",
-  "世界机器人大会青少年机器人设计与信息素养大赛",
-  "全国青少年科技教育成果展示大赛",
-  "全国青少年无人机大赛",
-  "全国青年科普创新实验暨作品大赛",
-  "宋庆龄少年儿童发明奖",
-  "全国中学生天文知识竞赛",
-  "“地球小博士”全国地理科普知识大赛",
-  "全国中学生水科技发明比赛",
-  "全国中学生地球科学奥林匹克竞赛",
-  "全国中学生数学奥林匹克竞赛",
-  "全国中学生物理奥林匹克竞赛",
-  "全国中学生化学奥林匹克竞赛",
-  "全国中学生生物学奥林匹克竞赛",
-  "全国中学生信息学奥林匹克竞赛",
-  "全国青少年科技创新大赛",
-  "全国青少年航天创新大赛",
-  "“北斗杯”全国青少年空天科技体验与创新大赛",
-  "蓝桥杯全国软件和信息技术专业人才大赛",
-  "丘成桐中学科学奖",
-  "全球发明大会中国区",
-  "中国“芯”助力中国梦——全国青少年通信科技创新大赛",
-  "全国青少年禁毒知识竞赛",
-  "世界华人学生作文大赛",
-  "“外研社杯”全国中学生外语素养大赛",
-  "叶圣陶杯全国中学生新作文大赛",
-  "全国中学生科普科幻作文大赛",
-  "高中生创新能力大赛",
-  "全国中学生创新作文大赛",
-  "“语文报杯•时代新人说”全国中学生征文大赛",
-  "全国中学生环境保护优秀作文征集活动",
-  "全国版图知识竞赛（中小学组）",
-  "全国青少年劳动技能与智能设计大赛",
-  "全国青少年文化遗产知识大赛",
-  "全国中小学生绘画书法作品比赛",
-  "“我爱祖国海疆”全国青少年航海模型教育竞赛",
-  "“驾驭未来”全国青少年车辆模型教育竞赛",
-  "全国青少年模拟飞行锦标赛",
-  "“飞向北京·飞向太空”全国青少年航空航天模型教育竞赛活动",
-  "全国青少年传统体育项目比赛",
-  "“致敬英雄”全国青少年文化艺术创作主题教育竞赛",
-  "“希望颂”——全国青少年书画艺术大展",
-  "全国青少年音乐素养大赛",
-]);
 const competitionRegisterInfo = ref([]);
+
+const getCompetitionData = async () => {
+  competitionNameOptions.value = await competitionStore.getCompetitionData();
+};
 
 const getCompetitionRegisterInfo = async () => {
   competitionRegisterInfo.value = await competitionStore.getCompetitionRegister(
@@ -61,6 +20,7 @@ const getCompetitionRegisterInfo = async () => {
 };
 
 onMounted(async () => {
+  getCompetitionData();
   getCompetitionRegisterInfo();
 });
 
@@ -84,9 +44,9 @@ const _onSelectChange = async () => {
       >
         <el-option
           v-for="item in competitionNameOptions"
-          :key="item"
-          :label="item"
-          :value="item"
+          :key="item.competitionName"
+          :label="item.competitionName"
+          :value="item.competitionName"
         />
       </el-select>
     </div>

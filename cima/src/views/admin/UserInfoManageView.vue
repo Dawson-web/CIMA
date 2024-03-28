@@ -46,8 +46,9 @@ const teachers = ref([]);
 const createVisible = ref(false);
 const deleteVisible = ref(false);
 const updateVisible = ref(false);
+
 const teacherForm = ref({});
-const teacherInfo = ref({});
+const userInfo = ref({});
 
 const deleteID = ref(1);
 const updateID = ref();
@@ -55,14 +56,14 @@ const updateID = ref();
 const adminStore = useAdminStore();
 
 onMounted(async () => {
-  teachers.value = await adminStore.adminGetTeacherInfo(pageForm.value);
+  teachers.value = await adminStore.adminGetuserInfo(pageForm.value);
   console.log(teachers.value);
 });
-
 const handleCurrentChange = async (val) => {
   pageForm.value.current = val;
-  teachers.value = await adminStore.adminGetTeacherInfo(pageForm.value);
+  teachers.value = await adminStore.adminGetuserInfo(pageForm.value);
 };
+
 const createTeacher = async () => {
   teacherForm.value.sex = parseInt(teacherForm.value.sex);
   teacherForm.value.password = teacherForm.value.password.toString();
@@ -71,20 +72,22 @@ const createTeacher = async () => {
   teacherForm.value = {};
   location.reload();
 };
+
 const deleteTeacher = async () => {
   console.log(deleteID.value);
   deleteID.value = parseInt(deleteID.value);
   await adminStore.adminDeleteTeacher(deleteID.value);
 };
-const getTeacherInfo = () => {
-  teacherInfo.value = teachers.value.users.filter(
+
+const getuserInfo = () => {
+  userInfo.value = teachers.value.users.filter(
     (item) => item.id === updateID.value
   )[0];
-  console.log(teacherInfo.value);
+  console.log(userInfo.value);
 };
-const updateTeacherInfo = async () => {
+const updateuserInfo = async () => {
   updateVisible.value = false;
-  await adminStore.adminUpdateTeacher(teacherInfo.value);
+  await adminStore.adminUpdateTeacher(userInfo.value);
   ElMessage({
     type: "success",
     message: "教师信息更新成功",
@@ -217,7 +220,7 @@ const updateTeacherInfo = async () => {
         <ElSelect
           v-model="updateID"
           placeholder="选择"
-          @change="getTeacherInfo"
+          @change="getuserInfo"
           style="width: 200px"
           :rows="2"
         >
@@ -228,16 +231,12 @@ const updateTeacherInfo = async () => {
             :value="item.id"
         /></ElSelect>
         <el-form-item label="学校：">
-          <el-input
-            style="width: 200px"
-            v-model="teacherInfo.school"
-            :rows="2"
-          />
+          <el-input style="width: 200px" v-model="userInfo.school" :rows="2" />
         </el-form-item>
         <el-form-item label="省份：">
           <ElSelect
             type="province"
-            v-model="teacherInfo.province"
+            v-model="userInfo.province"
             placeholder="选择"
             style="width: 200px"
             :rows="2"
@@ -252,7 +251,7 @@ const updateTeacherInfo = async () => {
       </el-form>
       <el-button type="primary" @click="updateVisible = false">取消</el-button>
 
-      <el-button type="primary" @click="updateTeacherInfo">确认</el-button>
+      <el-button type="primary" @click="updateuserInfo">确认</el-button>
     </el-dialog>
   </div>
 </template>

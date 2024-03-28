@@ -45,7 +45,10 @@ const onSubmitRegister = () => {
   <div>
     <el-row :gutter="12">
       <el-col :span="8" v-for="item in props.competitionDatas" :key="item.id">
-        <el-card shadow="hover" class="competion-card"
+        <el-card
+          shadow="hover"
+          class="competion-card"
+          :style="{ backgroundImage: `url(${item.picUrl})` }"
           ><h4>
             <el-button
               key="primary"

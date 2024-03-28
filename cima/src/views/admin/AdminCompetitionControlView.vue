@@ -1,45 +1,64 @@
 <script lang="ts" setup>
 import { useAccountStore } from "@/store/account";
+import { useAdminStore } from "@/store/admin";
 import { useCompetitionStore } from "@/store/competion";
-import { Edit } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 import { onMounted, ref } from "vue";
 
 const deleteVisible = ref(false);
 const createVisible = ref(false);
+const uploadVisible = ref(false);
 const newCompetitionForm = ref({});
-const useAccount = useAccountStore();
+
 const competitionDatas = ref([]);
 
+const picture = ref();
 const name = ref("");
+const id = ref();
+
+const competitionStore = useCompetitionStore();
+const useAccount = useAccountStore();
+const adminStore = useAdminStore();
+
+const getCompetitionData = async () => {
+  competitionDatas.value = await competitionStore.getCompetitionData();
+};
+
 // 预载
 onMounted(async () => {
-  const competitionStore = useCompetitionStore();
-  competitionDatas.value = await competitionStore.getCompetitionData();
-  console.log(competitionDatas.value);
+  getCompetitionData();
 });
-
 const createCompetition = () => {
   createVisible.value = true;
 };
-
 const cancleCreateCompetition = () => {
   createVisible.value = false;
   newCompetitionForm.value = {};
+  ElMessage({
+    message: "操作取消",
+  });
 };
 const doCreateCompetition = async () => {
   createVisible.value = false;
   await useAccount.addCompetition(newCompetitionForm.value);
   newCompetitionForm.value = {};
+  ElMessage({
+    type: "success",
+    message: "竞赛创建成功",
+  });
 };
 const exportCompetition = async () => {
   const res = await useAccount.exportCompetition();
-  const url = window.URL.createObjectURL(new Blob([res]));
+  const url = window.URL.createObjectURL(res.data);
   const link = document.createElement("a");
   link.href = url;
-  link.setAttribute("download", "competition.xlsx"); // 设定下载的文件名
+  link.setAttribute("download", "全国中小学生竞赛信息.xlsx");
   document.body.appendChild(link);
   link.click();
+  ElMessage({
+    type: "success",
+    message: "文件导出成功",
+  });
 };
 const deleteCompetition = async () => {
   deleteVisible.value = true;
@@ -53,6 +72,20 @@ const dodeleteCompetition = async () => {
   });
   location.reload();
 };
+const uploadCompetitionPicture = async () => {
+  uploadVisible.value = true;
+};
+const doUploadCompetitionPicture = async () => {
+  const formData = new FormData();
+  let fileInput = document.getElementById("myFile");
+  formData.append("file", fileInput.files[0]);
+  await adminStore.uploadCompetitionPicture(id.value, formData);
+  uploadVisible.value = false;
+  ElMessage({
+    type: "success",
+    message: "图片上传成功",
+  });
+};
 </script>
 
 <template>
@@ -65,6 +98,9 @@ const dodeleteCompetition = async () => {
     >
     <el-button type="primary" @click="deleteCompetition"
       >删除竞赛信息</el-button
+    >
+    <el-button type="primary" @click="uploadCompetitionPicture"
+      >上传竞赛图片</el-button
     >
     <el-dialog
       v-model="createVisible"
@@ -142,7 +178,20 @@ const dodeleteCompetition = async () => {
   </div>
   <el-dialog v-model="deleteVisible" title="删除竞赛" width="600">
     <label for="">竞赛名：</label>
-    <el-input style="width: 240px" placeholder="Please input" v-model="name" />
+    <el-select
+      v-model="name"
+      placeholder="Select"
+      size="large"
+      style="width: 200px"
+    >
+      <el-option
+        v-for="item in competitionDatas"
+        :key="item.competitionName"
+        :label="item.competitionName"
+        :value="item.competitionName"
+      />
+    </el-select>
+    <br />
     <el-button
       @click="
         deleteVisible = false;
@@ -153,12 +202,34 @@ const dodeleteCompetition = async () => {
     <el-button type="primary" @click="dodeleteCompetition">确认</el-button>
   </el-dialog>
 
-  <el-button
-    style="position: fixed; margin-left: 95vw"
-    type="primary"
-    :icon="Edit"
-    circle
-  />
+  <el-dialog v-model="uploadVisible" title="上传竞赛图片" width="600">
+    <label for="">竞赛名：</label>
+    <el-select
+      v-model="id"
+      placeholder="Select"
+      size="large"
+      style="width: 200px"
+    >
+      <el-option
+        v-for="item in competitionDatas"
+        :key="item.id"
+        :label="item.competitionName"
+        :value="item.id"
+      />
+    </el-select>
+    <br />
+    <el-input v-model="picture" type="file" id="myFile" />
+    <el-button
+      @click="
+        uploadVisible = false;
+        name = '';
+      "
+      >取消</el-button
+    >
+    <el-button type="primary" @click="doUploadCompetitionPicture"
+      >确认</el-button
+    >
+  </el-dialog>
 </template>
 
 <style lang="scss" scoped>

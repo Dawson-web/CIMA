@@ -205,7 +205,7 @@ const judgeUserType = () => {
         </el-menu-item>
         <el-menu-item
           index="6"
-          route="/dashboard/competitions"
+          route="/dashboard/usermanage"
           v-if="judgeUserType()"
         >
           <el-icon><UserFilled /></el-icon>

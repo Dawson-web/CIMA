@@ -3,7 +3,7 @@ import { useCompetitionStore } from "@/store/competion";
 import { usePublicStore } from "@/store/public";
 import { onMounted, ref } from "vue";
 
-const competitionID = ref();
+const competitionID = ref(3);
 const competition = ref([]);
 const competitionStore = useCompetitionStore();
 const publicStore = usePublicStore();
@@ -12,10 +12,10 @@ const commentForm = ref({});
 const comments = ref([]);
 onMounted(async () => {
   competition.value = await competitionStore.getCompetitionData();
+  onSelectChange();
 });
 const onSelectChange = async () => {
   comments.value = await publicStore.getComment(competitionID.value);
-  console.log(comments.value);
 };
 const createComment = async () => {
   console.log(commentForm.value);
@@ -90,7 +90,7 @@ const createComment = async () => {
           />
         </el-form-item>
       </el-form>
-      <el-button type="primary" @click="dodeleteCompetition">取消</el-button>
+      <el-button type="primary" @click="createVisible = false">取消</el-button>
 
       <el-button type="primary" @click="createComment">确认</el-button>
     </el-dialog>

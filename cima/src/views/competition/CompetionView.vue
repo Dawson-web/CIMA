@@ -33,7 +33,6 @@ onMounted(async () => {
   const competitionStore = useCompetitionStore();
   competitionDatas.value = await competitionStore.getCompetitionData();
   competionUserLike.value = await account.getCompetitionUserLike();
-  console.log(competitionDatas.value);
 });
 // 切换年级分组
 const onGroupChange = async () => {
@@ -54,6 +53,7 @@ const onGroupChange = async () => {
         <el-carousel-item
           v-for="item in competionUserLike.data"
           :key="item.competitionName"
+          :style="{ backgroundImage: `url(${item.picUrl})` }"
           ><h3 class="small justify-center" text="2xl">
             {{ item.competitionName }}
           </h3>

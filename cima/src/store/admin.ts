@@ -9,6 +9,7 @@ import {
   adminLogoutAPI,
   adminUpdateTeacherAPI,
   adminUpdateUserAPI,
+  updateCompetitionPictureAPI,
 } from "@/api/types";
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -52,9 +53,9 @@ export const useAdminStore = defineStore("admin", () => {
     return res.data.data;
   };
 
-  // const updateCompetitionPicture = async () => {
-  //   return await updateCompetitionPictureAPI();
-  // };
+  const uploadCompetitionPicture = async (id: number, file: any) => {
+    return await updateCompetitionPictureAPI(id, file);
+  };
   return {
     _token,
     adminLogin,
@@ -67,5 +68,6 @@ export const useAdminStore = defineStore("admin", () => {
     adminUpdateTeacher,
     adminDeleteTeacher,
     adminGetTeacherInfo,
+    uploadCompetitionPicture,
   };
 });

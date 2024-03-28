@@ -9,12 +9,13 @@ import {
 } from "../api/types";
 
 export const useCompetitionStore = defineStore("competition", () => {
-  const competitionData = ref({ data: null });
+  const competitionData = ref([]);
   const serachKeyword = ref("");
   const competitionGroupData = ref({ data: null });
   async function getCompetitionData() {
     try {
       const res = await getCompetitionDataAPI();
+      competitionData.value = res.data.data;
       return res.data.data;
     } catch (e) {
       console.error("Failed to fetch competition data:", e);
